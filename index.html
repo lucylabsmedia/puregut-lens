@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en" data-camo="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PureGut CDED &amp; Additive Lens</title>
+<meta name="description" content="Scan a barcode or an ingredient list and screen it for 65 additives restricted in Crohn's disease diet protocols.">
+<meta name="theme-color" content="#0E6B58">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PurePlate">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='116' fill='%230E6B58'/%3E%3Ccircle cx='228' cy='228' r='112' fill='none' stroke='white' stroke-width='46'/%3E%3Cpath d='M312 312l88 88' stroke='white' stroke-width='46' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<!-- Dependencies, pinned. Tailwind is precompiled into the style block below (its CDN build is for development only). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&amp;display=swap">
+<script defer crossorigin src="https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js"></script>
+<style>
+/* Tailwind CSS v3.4 (MIT), precompiled: only the classes this page uses */
+:root{color-scheme:light dark;--pri:14 107 88;--on-pri:255 255 255;--pri-c:189 238 221;--on-pri-c:0 32 25;--sur:244 250 246;--sur-c:232 240 235;--sur-h:219 229 223;--on-sur:21 29 26;--on-var:63 73 68;--out:111 121 115;--out-v:190 201 194;--ter-c:240 219 255;--on-ter-c:37 13 51;--ter:107 78 122;--bad:179 38 30;--bad-c:255 218 214;--on-bad-c:65 0 2;--warn:128 86 0;--warn-c:255 222 166;--on-warn-c:40 25 0;--ok:27 108 58;--ok-c:168 245 183;--on-ok-c:0 33 11}
+@media (prefers-color-scheme:dark){:root{--pri:128 216 194;--on-pri:0 56 46;--pri-c:0 81 67;--on-pri-c:189 238 221;--sur:14 21 18;--sur-c:26 33 30;--sur-h:38 46 42;--on-sur:222 228 223;--on-var:190 201 194;--out:137 147 141;--out-v:63 73 68;--ter-c:82 55 96;--on-ter-c:240 219 255;--ter:217 188 232;--bad:255 180 171;--bad-c:147 0 10;--on-bad-c:255 218 214;--warn:246 190 72;--warn-c:97 64 0;--on-warn-c:255 222 166;--ok:140 216 156;--ok-c:0 83 38;--on-ok-c:168 245 183}
+}
+html[data-camo="1"]{--pri:71 85 105;--on-pri:255 255 255;--pri-c:226 232 240;--on-pri-c:15 23 42;--sur:248 250 252;--sur-c:241 245 249;--sur-h:226 232 240;--on-sur:15 23 42;--on-var:71 85 105;--out:100 116 139;--out-v:203 213 225;--ter-c:226 232 240;--on-ter-c:15 23 42;--ter:71 85 105;--bad:127 79 79;--bad-c:233 237 242;--on-bad-c:30 41 59;--warn:124 107 70;--warn-c:233 237 242;--on-warn-c:30 41 59;--ok:76 110 90;--ok-c:233 237 242;--on-ok-c:30 41 59}
+@media (prefers-color-scheme:dark){html[data-camo="1"]{--pri:148 163 184;--on-pri:15 23 42;--pri-c:51 65 85;--on-pri-c:226 232 240;--sur:15 23 42;--sur-c:30 41 59;--sur-h:51 65 85;--on-sur:226 232 240;--on-var:148 163 184;--out:100 116 139;--out-v:51 65 85;--ter-c:51 65 85;--on-ter-c:226 232 240;--ter:148 163 184;--bad:201 160 160;--bad-c:39 51 71;--on-bad-c:226 232 240;--warn:196 182 148;--warn-c:39 51 71;--on-warn-c:226 232 240;--ok:156 188 168;--ok-c:39 51 71;--on-ok-c:226 232 240}
+}
+*,:after,:before{box-sizing:border-box;border:0 solid rgb(var(--out-v))}
+html{line-height:1.5;-webkit-text-size-adjust:100%;scroll-padding-top:5rem;font-family:Roboto Flex,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{margin:0;background:rgb(var(--sur));color:rgb(var(--on-sur));-webkit-tap-highlight-color:transparent}
+h1,h2,p,ul{margin:0;padding:0;font-size:inherit;font-weight:inherit}
+ul{list-style:none}
+button,input,textarea{margin:0;font:inherit;color:inherit}
+button{padding:0;background:none;cursor:pointer}
+svg,video{display:block}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid rgb(var(--pri));outline-offset:2px}
+summary{list-style:none}
+summary::-webkit-details-marker{display:none}
+input[type=search]::-webkit-search-decoration{-webkit-appearance:none}
+a{color:rgb(var(--pri));text-underline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,:after,:before{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+.hl{font-weight:800;font-stretch:112%;letter-spacing:-.015em;line-height:1.05}
+html[data-camo="1"] .hl{font-weight:600;font-stretch:100%}
+.ic{width:1.5rem;height:1.5rem;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.top{position:sticky;top:0;z-index:20;background:rgb(var(--sur));padding-top:env(safe-area-inset-top,0)}
+.foot{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgb(var(--sur-c));border-top:1px solid rgb(var(--out-v));padding-bottom:env(safe-area-inset-bottom,0)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3.25rem;padding:0 1rem;border-radius:999px;font-weight:600;font-size:.95rem;line-height:1.15;text-align:center;cursor:pointer;transition:border-radius .25s cubic-bezier(.2,1.4,.4,1),transform .15s}
+.btn:active{border-radius:14px;transform:scale(.98)}
+.btn:focus-within{outline:3px solid rgb(var(--pri));outline-offset:2px}
+.btn-fill{background:rgb(var(--pri));color:rgb(var(--on-pri))}
+.btn-tonal{background:rgb(var(--pri-c));color:rgb(var(--on-pri-c))}
+.btn-out{border:1.5px solid rgb(var(--out));color:rgb(var(--pri))}
+.btn-out[aria-pressed=true]{background:rgb(var(--pri));color:rgb(var(--on-pri));border-color:transparent}
+.card{background:rgb(var(--sur-c));border-radius:28px;padding:1rem 1.125rem}
+.tone-ter{background:rgb(var(--ter-c));color:rgb(var(--on-ter-c));--b:var(--ter)}
+.field{display:block;width:100%;background:rgb(var(--sur-h));color:inherit;border:1.5px solid transparent;border-radius:16px;padding:.8rem 1rem;font-size:1rem}
+.field:focus{border-color:rgb(var(--pri));outline:none}
+.field::-moz-placeholder{color:rgb(var(--on-var));opacity:1}
+.field::placeholder{color:rgb(var(--on-var));opacity:1}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:rgb(var(--sur-h))}
+.seg,.seg button{border-radius:999px}
+.seg button{min-height:3rem;font-weight:600;font-size:.9rem;line-height:1.15;color:rgb(var(--on-var));transition:background .2s,color .2s}
+.seg button small{display:block;font-weight:400;font-size:.7rem}
+.seg button[aria-pressed=true]{background:rgb(var(--pri));color:rgb(var(--on-pri))}
+.vf{position:relative;aspect-ratio:2/1;border-radius:32px;overflow:hidden;background:rgb(var(--sur-h))}
+.vf.on{aspect-ratio:4/3}
+.vf.\!on{aspect-ratio:4/3!important}
+.vf video{width:100%;height:100%;-o-object-fit:cover;object-fit:cover;background:#000}
+.vf-frame{position:absolute;inset:24% 9%;border:3px solid #fff;border-radius:20px;box-shadow:0 0 0 100vmax rgba(0,0,0,.35);pointer-events:none}
+.vf-chip{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);max-width:92%;padding:.35rem .8rem;background:rgba(0,0,0,.72);color:#fff;font-size:.8rem;text-align:center}
+.bar,.vf-chip{border-radius:999px}
+.bar{height:8px;background:rgb(var(--sur-h));overflow:hidden}
+.bar>i{display:block;height:100%;width:0;border-radius:999px;background:rgb(var(--b,var(--pri)));transition:width .25s}
+.bar.big{height:18px;background:rgb(var(--sur)/.6)}
+.verdict{display:flex;align-items:center;gap:1rem;padding:1.125rem;border-radius:32px;background:rgb(var(--sur-h));--v:var(--out);scroll-margin-top:5rem}
+.verdict[data-v=red]{background:rgb(var(--bad-c));color:rgb(var(--on-bad-c));--v:var(--bad)}
+.verdict[data-v=amber]{background:rgb(var(--warn-c));color:rgb(var(--on-warn-c));--v:var(--warn)}
+.verdict[data-v=green]{background:rgb(var(--ok-c));color:rgb(var(--on-ok-c));--v:var(--ok)}
+.stamp{position:relative;flex:none;display:grid;place-items:center;width:4.75rem;height:4.75rem;color:rgb(var(--sur));animation:stamp .5s cubic-bezier(.2,1.4,.4,1)}
+.stamp-shape{position:absolute;inset:0;width:100%;height:100%;fill:rgb(var(--v))}
+.stamp .ic{position:relative}
+.stamp.sm{width:2.75rem;height:2.75rem;animation:none;--v:var(--pri)}
+@keyframes stamp{0%{transform:scale(.4) rotate(-45deg);opacity:0}
+}
+html[data-camo="1"] .stamp-shape{display:none}
+html[data-camo="1"] .stamp{width:3.25rem;height:3.25rem;border-radius:16px;background:rgb(var(--sur));color:rgb(var(--v));animation:none}
+html[data-camo="1"] .stamp.sm{width:2.75rem;height:2.75rem;background:rgb(var(--sur-h))}
+.add{display:block;background:rgb(var(--sur-c));border-radius:22px;overflow:hidden;--s:var(--out);--s-c:var(--sur-h);--on-s-c:var(--on-sur)}
+.add[data-s=bad]{--s:var(--bad);--s-c:var(--bad-c);--on-s-c:var(--on-bad-c)}
+.add[data-s=warn]{--s:var(--warn);--s-c:var(--warn-c);--on-s-c:var(--on-warn-c)}
+.add[data-s=ok]{--s:var(--ok);--s-c:var(--ok-c);--on-s-c:var(--on-ok-c)}
+.add>summary{display:flex;align-items:center;gap:.75rem;min-height:3.75rem;padding:.75rem 1rem;cursor:pointer}
+.dot{width:.75rem;height:.75rem;background:rgb(var(--s))}
+.dot,.pill{flex:none;border-radius:999px}
+.pill{padding:.2rem .65rem;font-size:.72rem;font-weight:600;background:rgb(var(--s-c));color:rgb(var(--on-s-c))}
+html[data-camo="1"] .pill{border:1px solid rgb(var(--out-v))}
+.chev{transition:transform .2s}
+details[open]>summary .chev{transform:rotate(180deg)}
+.chip{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .85rem;border-radius:12px;border:1.5px solid rgb(var(--out-v));font-size:.85rem;font-weight:500}
+.chip[aria-pressed=true]{background:rgb(var(--pri-c));color:rgb(var(--on-pri-c));border-color:transparent}
+.nav{display:grid;grid-template-columns:repeat(4,1fr)}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:.4rem 0 .5rem;font-size:.72rem;font-weight:600;color:rgb(var(--on-var))}
+.nav .ind{display:grid;place-items:center;width:3.5rem;height:2rem;border-radius:999px;transition:background .25s,width .3s cubic-bezier(.2,1.4,.4,1)}
+.nav button[aria-current=page]{color:rgb(var(--on-sur))}
+.nav button[aria-current=page] .ind{width:4.25rem;background:rgb(var(--pri-c));color:rgb(var(--on-pri-c))}
+.toast{position:fixed;left:50%;bottom:9.75rem;z-index:30;transform:translateX(-50%);width:-moz-max-content;width:max-content;max-width:90vw;padding:.7rem 1rem;border-radius:14px;background:rgb(var(--on-sur));color:rgb(var(--sur));font-size:.9rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+.mx-auto{margin-left:auto;margin-right:auto}
+.mb-2{margin-bottom:.5rem}
+.mt-1{margin-top:.25rem}
+.mt-2{margin-top:.5rem}
+.mt-3{margin-top:.75rem}
+.mt-4{margin-top:1rem}
+.block{display:block}
+.flex{display:flex}
+.grid{display:grid}
+.h-10{height:2.5rem}
+.h-11{height:2.75rem}
+.h-4{height:1rem}
+.h-5{height:1.25rem}
+.h-9{height:2.25rem}
+.h-full{height:100%}
+.min-h-0{min-height:0}
+.min-h-screen{min-height:100vh}
+.w-10{width:2.5rem}
+.w-4{width:1rem}
+.w-5{width:1.25rem}
+.w-9{width:2.25rem}
+.w-full{width:100%}
+.min-w-0{min-width:0}
+.max-w-xl{max-width:36rem}
+.flex-1{flex:1 1 0%}
+.flex-none{flex:none}
+.cursor-pointer{cursor:pointer}
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.flex-col{flex-direction:column}
+.flex-wrap{flex-wrap:wrap}
+.items-end{align-items:flex-end}
+.items-center{align-items:center}
+.justify-center{justify-content:center}
+.justify-between{justify-content:space-between}
+.gap-2{gap:.5rem}
+.gap-3{gap:.75rem}
+.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}
+.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}
+.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}
+.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}
+.divide-out-v>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(var(--out-v)/var(--tw-divide-opacity,1))}
+.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rounded-2xl{border-radius:1rem}
+.border{border-width:1px}
+.border-out-v{--tw-border-opacity:1;border-color:rgb(var(--out-v)/var(--tw-border-opacity,1))}
+.px-4{padding-left:1rem;padding-right:1rem}
+.px-8{padding-left:2rem;padding-right:2rem}
+.py-2{padding-top:.5rem;padding-bottom:.5rem}
+.py-3{padding-top:.75rem;padding-bottom:.75rem}
+.pb-4{padding-bottom:1rem}
+.pb-52{padding-bottom:13rem}
+.pt-1{padding-top:.25rem}
+.pt-2{padding-top:.5rem}
+.text-left{text-align:left}
+.text-center{text-align:center}
+.text-2xl{font-size:1.5rem;line-height:2rem}
+.text-3xl{font-size:1.875rem;line-height:2.25rem}
+.text-4xl{font-size:2.25rem;line-height:2.5rem}
+.text-\[10\.5px\]{font-size:10.5px}
+.text-base{font-size:1rem;line-height:1.5rem}
+.text-lg{font-size:1.125rem;line-height:1.75rem}
+.text-sm{font-size:.875rem;line-height:1.25rem}
+.text-xs{font-size:.75rem;line-height:1rem}
+.font-bold{font-weight:700}
+.font-medium{font-weight:500}
+.font-semibold{font-weight:600}
+.leading-snug{line-height:1.375}
+.leading-tight{line-height:1.25}
+.text-ink{--tw-text-opacity:1;color:rgb(var(--on-sur)/var(--tw-text-opacity,1))}
+.text-mut{--tw-text-opacity:1;color:rgb(var(--on-var)/var(--tw-text-opacity,1))}
+.text-pri{--tw-text-opacity:1;color:rgb(var(--pri)/var(--tw-text-opacity,1))}
+.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+</style>
+</head>
+<body class="min-h-screen antialiased">
+<!-- Icons: Lucide (ISC licence), inlined -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-scan-barcode" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></symbol>
+<symbol id="i-scan-text" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></symbol>
+<symbol id="i-image-up" viewBox="0 0 24 24"><path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21"/><path d="m14 19.5 3-3 3 3"/><path d="M17 22v-5.5"/><circle cx="9" cy="9" r="2"/></symbol>
+<symbol id="i-keyboard" viewBox="0 0 24 24"><path d="M10 8h.01"/><path d="M12 12h.01"/><path d="M14 8h.01"/><path d="M16 12h.01"/><path d="M18 8h.01"/><path d="M6 8h.01"/><path d="M7 16h10"/><path d="M8 12h.01"/><rect width="20" height="16" x="2" y="4" rx="2"/></symbol>
+<symbol id="i-book-open" viewBox="0 0 24 24"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/></symbol>
+<symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></symbol>
+<symbol id="i-heart-handshake" viewBox="0 0 24 24"><path d="M19.414 14.414C21 12.828 22 11.5 22 9.5a5.5 5.5 0 0 0-9.591-3.676.6.6 0 0 1-.818.001A5.5 5.5 0 0 0 2 9.5c0 2.3 1.5 4 3 5.5l5.535 5.362a2 2 0 0 0 2.879.052 2.12 2.12 0 0 0-.004-3 2.124 2.124 0 1 0 3-3 2.124 2.124 0 0 0 3.004 0 2 2 0 0 0 0-2.828l-1.881-1.882a2.41 2.41 0 0 0-3.409 0l-1.71 1.71a2 2 0 0 1-2.828 0 2 2 0 0 1 0-2.828l2.823-2.762"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></symbol>
+<symbol id="i-octagon-alert" viewBox="0 0 24 24"><path d="M12 16h.01"/><path d="M12 8v4"/><path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"/></symbol>
+<symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></symbol>
+<symbol id="i-circle-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5"/><rect x="3" y="7" width="18" height="4" rx="1"/></symbol>
+<symbol id="i-armchair" viewBox="0 0 24 24"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/></symbol>
+<symbol id="i-hand-coins" viewBox="0 0 24 24"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></symbol>
+<symbol id="i-microscope" viewBox="0 0 24 24"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></symbol>
+<symbol id="i-flask-conical" viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"/><path d="M6.453 15h11.094"/><path d="M8.5 2h7"/></symbol>
+<symbol id="i-stamp" viewBox="0 0 100 100"><path d="M44.8 5.7Q50 0 55.2 5.7Q60.4 11.4 67.7 9Q75 6.7 76.6 14.2Q78.3 21.7 85.8 23.4Q93.3 25 91 32.3Q88.6 39.6 94.3 44.8Q100 50 94.3 55.2Q88.6 60.4 91 67.7Q93.3 75 85.8 76.6Q78.3 78.3 76.6 85.8Q75 93.3 67.7 91Q60.4 88.6 55.2 94.3Q50 100 44.8 94.3Q39.6 88.6 32.3 91Q25 93.3 23.4 85.8Q21.7 78.3 14.2 76.6Q6.7 75 9 67.7Q11.4 60.4 5.7 55.2Q0 50 5.7 44.8Q11.4 39.6 9 32.3Q6.7 25 14.2 23.4Q21.7 21.7 23.4 14.2Q25 6.7 32.3 9Q39.6 11.4 44.8 5.7Z"/></symbol>
+</svg>
+<header class="top">
+  <div class="mx-auto flex max-w-xl items-center gap-3 px-4 py-3">
+    <span class="stamp sm"><svg class="stamp-shape" aria-hidden="true"><use href="#i-stamp"/></svg><svg class="ic h-5 w-5" aria-hidden="true"><use href="#i-scan-text"/></svg></span>
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-lg font-bold leading-tight" data-t="appName">PureGut</p>
+      <p class="truncate text-xs text-mut" data-t="appSub">CDED &amp; Additive Lens</p>
+    </div>
+    <button id="camo" type="button" class="btn btn-out h-11 min-h-0 px-4 text-sm" aria-pressed="false" title="Switch between clinical wording and a neutral look for public places">
+      <svg id="camoIcon" class="ic h-5 w-5" aria-hidden="true"><use href="#i-eye"/></svg>Discreet
+    </button>
+  </div>
+</header>
+
+<main class="mx-auto max-w-xl px-4 pb-52 pt-2">
+  <!-- Scan and upload -->
+  <section id="v-scan" class="space-y-4">
+    <div>
+      <h1 class="hl text-2xl" data-t="scanH">Check a product</h1>
+      <p class="mt-2 text-sm text-mut" data-t="scanP"></p>
+    </div>
+    <div class="seg" data-seg role="group" aria-label="Diet phase"></div>
+    <div class="vf" id="vf">
+      <video id="video" playsinline muted autoplay hidden></video>
+      <div id="vfIdle" class="flex h-full flex-col items-center justify-center gap-3 px-8 text-center text-mut">
+        <svg class="ic h-10 w-10" aria-hidden="true"><use href="#i-scan-barcode"/></svg>
+        <p class="text-sm">Scan the barcode first. If the product is not found, use Read label on its ingredient list.</p>
+      </div>
+      <div id="vfFrame" class="vf-frame" hidden></div>
+      <p id="vfChip" class="vf-chip" role="status" hidden></p>
+    </div>
+    <div class="grid grid-cols-2 gap-2">
+      <button id="btnCam" type="button" class="btn btn-fill"><svg class="ic" aria-hidden="true"><use href="#i-scan-barcode"/></svg><span id="btnCamText">Scan barcode</span></button>
+      <button id="btnSnap" type="button" class="btn btn-tonal"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>Read label</button>
+    </div>
+    <label class="btn btn-out w-full"><svg class="ic" aria-hidden="true"><use href="#i-image-up"/></svg>Choose a photo<input id="filePick" type="file" accept="image/*" class="sr-only"></label>
+    <input id="fileCam" type="file" accept="image/*" capture="environment" class="sr-only" tabindex="-1" aria-hidden="true">
+    <div id="prog" class="card" role="status" hidden>
+      <p id="progText" class="mb-2 text-sm font-medium"></p>
+      <div class="bar"><i id="progBar"></i></div>
+    </div>
+    <details class="card">
+      <summary class="flex cursor-pointer items-center gap-3 font-semibold"><svg class="ic" aria-hidden="true"><use href="#i-keyboard"/></svg><span class="flex-1">Type a barcode or ingredients</span><svg class="ic chev h-5 w-5 text-mut" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+      <form id="fCode" class="mt-4 flex gap-2">
+        <input id="inCode" class="field" inputmode="numeric" autocomplete="off" placeholder="Barcode digits" aria-label="Barcode digits">
+        <button class="btn btn-tonal flex-none">Look up</button>
+      </form>
+      <form id="fText" class="mt-3 space-y-2">
+        <textarea id="inText" class="field" rows="4" placeholder="Paste or type the ingredient list" aria-label="Ingredient list"></textarea>
+        <button class="btn btn-tonal w-full">Check ingredients</button>
+      </form>
+    </details>
+    <section id="result" class="space-y-4 pt-2" aria-live="polite" hidden></section>
+  </section>
+
+  <!-- Library -->
+  <section id="v-guide" class="space-y-4" hidden>
+    <div>
+      <h1 class="hl text-3xl" data-t="guideH">Additive library</h1>
+      <p class="mt-2 text-sm text-mut" data-t="guideP"></p>
+    </div>
+    <div class="seg" data-seg role="group" aria-label="Diet phase"></div>
+    <input id="q" type="search" class="field" placeholder="Search a name, E-number or label term" aria-label="Search the library">
+    <div id="filters" class="flex flex-wrap gap-2"></div>
+    <p id="gCount" class="text-sm text-mut" role="status"></p>
+    <div id="gList" class="space-y-2"></div>
+    <details class="card">
+      <summary class="flex cursor-pointer items-center gap-3 font-semibold"><svg class="ic" aria-hidden="true"><use href="#i-flask-conical"/></svg><span class="flex-1" data-t="evH">What the evidence says, and its limits</span><svg class="ic chev h-5 w-5 text-mut" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+      <div class="mt-3 space-y-3 text-sm">
+        <p><span class="font-semibold">ADDapt trial.</span> King's College London randomised 154 adults with mildly to moderately active Crohn's disease for 8 weeks. Symptoms responded in 49% on the low-emulsifier diet and 31% on the control diet. When this guide was written, the results were available only as conference abstracts.</p>
+        <p><span class="font-semibold">Which additives were tested.</span> ADDapt's control group ate snacks containing carrageenan, carboxymethylcellulose and polysorbate 80. Every other entry here is flagged from the CDED avoid list, from lab studies, or by chemical similarity. Each card states its basis.</p>
+        <p><span class="font-semibold">Evidence against.</span> A 4-week Australian feeding trial found no difference in Crohn's disease activity between high- and low-emulsifier versions of a healthy diet.</p>
+        <p><span class="font-semibold">CDED.</span> The Crohn's Disease Exclusion Diet (Levine and colleagues) pairs whole foods with partial enteral nutrition over three phases. It restricts whole food groups as well as additives, so a clear additive screen does not make a product CDED compliant.</p>
+        <p><span class="font-semibold">Sources.</span> <a href="https://doi.org/10.1093/ecco-jcc/jjae190.0136" target="_blank" rel="noopener">ADDapt abstract</a>, <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11950802/" target="_blank" rel="noopener">Australian feeding trial</a>, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10467299/" target="_blank" rel="noopener">CDED systematic review</a>. Product data comes from <a href="https://world.openfoodfacts.org" target="_blank" rel="noopener">Open Food Facts</a> under the Open Database License.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- History -->
+  <section id="v-history" class="space-y-4" hidden>
+    <div class="flex items-end justify-between gap-3">
+      <h1 class="hl text-3xl">History</h1>
+      <button id="clearHist" type="button" class="btn btn-out h-10 min-h-0 px-4 text-sm">Clear history</button>
+    </div>
+    <div id="hList" class="space-y-2"></div>
+  </section>
+
+  <!-- Fundraiser preview -->
+  <section id="v-impact" class="space-y-4" hidden></section>
+</main>
+
+<footer class="foot">
+  <p class="mx-auto max-w-xl px-4 pt-2 text-[10.5px] leading-snug text-mut" data-t="disc"></p>
+  <nav class="nav mx-auto max-w-xl" aria-label="Sections">
+    <button type="button" data-tab="scan"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-scan-barcode"/></svg></span>Scan</button>
+    <button type="button" data-tab="guide"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg></span>Library</button>
+    <button type="button" data-tab="history"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-history"/></svg></span>History</button>
+    <button type="button" data-tab="impact"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-heart-handshake"/></svg></span><span data-t="navImpact">Impact</span></button>
+  </nav>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* PureGut CDED & Additive Lens. Static client app: no build step, no server.
+   Sections: 1 dataset, 2 helpers, 3 matcher, 4 verdict, 5 views,
+   6 camera and barcode, 7 OCR, 8 Open Food Facts, 9 events and start-up. */
+(() => {
+'use strict';
+
+/* ===== 1. Clinical dataset (embedded, works offline) =====
+   riskTier: 1 = avoid in every phase, 2 = caution (phase-restricted), 3 = permitted whole ingredient
+   cdedPhaseAllowed: 0 = prohibited, 1 = from Phase 1, 2 = from Phase 2, 3 = maintenance only
+   sources: A = ADDapt control-arm additive, C = CDED avoid list, L = lab/animal data,
+            P = precaution, F = CDED food list */
+const DB = [];
+const SRC = {
+  A: 'added back in the ADDapt trial control arm',
+  C: 'named on the CDED avoid list',
+  L: 'lab and animal studies',
+  P: 'precaution (related compound or processed-food marker)',
+  F: 'CDED food list'
+};
+function add(riskTier, cdedPhaseAllowed, group, canonicalName, eNumber, aliases, mechanismSummary, sources) {
+  DB.push({ id: DB.length, canonicalName, eNumber, aliases: aliases.split('|'), riskTier,
+    cdedPhaseAllowed, mechanismSummary, group, sources: sources.split('') });
+}
+// Shared one-sentence summaries for families with little compound-specific research
+const M = {
+  poly: 'Same chemical family as polysorbate 80; flagged by analogy because it has had little direct testing.',
+  gum: 'Thickening gum; lab microbiota studies show mixed effects and no Crohn\'s trial has tested it alone, so it is restricted as a processed-food marker.',
+  alg: 'Seaweed-derived thickener; direct gut-barrier evidence is sparse, so it is restricted as a processed-food marker.',
+  cel: 'Cellulose derivative related to carboxymethylcellulose; flagged by chemical similarity because direct human data are lacking.',
+  emu: 'Synthetic emulsifier; restricted under low-emulsifier diets, although evidence for this compound on its own is limited.',
+  sor: 'Sorbitan ester emulsifier related to the polysorbates; flagged by analogy with little direct testing.',
+  swe: 'Non-nutritive sweetener; animal studies report gut microbiota shifts, and sweetened processed products are excluded in early CDED phases.',
+  sta: 'Chemically modified starch used as a thickener; little direct gut-barrier research, restricted as a processed-food marker.',
+  man: 'Mandatory daily food in CDED Phases 1 and 2.'
+};
+
+// --- Tier 1: avoid in every phase (12) ---
+add(1, 0, 'Polysorbate', 'Polysorbate 80', 'E433', 'polysorbate 80|polysorbate80|polysorbate|tween 80|polyoxyethylene sorbitan monooleate|polyoxyethylene 20 sorbitan monooleate', 'Thinned the protective mucus layer and let bacteria reach the gut lining in mouse studies; one of three emulsifiers added back in the ADDapt control arm.', 'AL');
+add(1, 0, 'Polysorbate', 'Polysorbate 60', 'E435', 'polysorbate 60|polysorbate60|tween 60|polyoxyethylene sorbitan monostearate|polyoxyethylene 20 sorbitan monostearate', M.poly, 'P');
+add(1, 0, 'Polysorbate', 'Polysorbate 20', 'E432', 'polysorbate 20|polysorbate20|tween 20|polyoxyethylene sorbitan monolaurate', M.poly, 'P');
+add(1, 0, 'Polysorbate', 'Polysorbate 40', 'E434', 'polysorbate 40|polysorbate40|tween 40|polyoxyethylene sorbitan monopalmitate', M.poly, 'P');
+add(1, 0, 'Polysorbate', 'Polysorbate 65', 'E436', 'polysorbate 65|polysorbate65|tween 65|polyoxyethylene sorbitan tristearate', M.poly, 'P');
+add(1, 0, 'Cellulose', 'Carboxymethylcellulose (cellulose gum)', 'E466', 'carboxymethylcellulose|carboxymethyl cellulose|carboxy methyl cellulose|sodium carboxymethylcellulose|sodium carboxymethyl cellulose|cellulose gum|carmellose|carmellose sodium|cmc|sodium cmc', 'Thinned the mucus layer in mice and shifted gut microbiota in a short human feeding study; added back in the ADDapt control arm.', 'AL');
+add(1, 0, 'Seaweed thickener', 'Carrageenan', 'E407', 'carrageenan|carageenan|carragenan|carrageenin|irish moss extract', 'Triggers inflammatory signalling in gut cell models; added back in the ADDapt control arm and named on the CDED avoid list.', 'ACL');
+add(1, 0, 'Seaweed thickener', 'Processed Eucheuma seaweed', 'E407a', 'processed eucheuma seaweed|processed euchema seaweed|eucheuma seaweed', 'Semi-refined form of carrageenan; treated the same way as carrageenan.', 'P');
+add(1, 0, 'Refined carbohydrate', 'Maltodextrin', '', 'maltodextrin|maltodextrine|maltodextrina|malto dextrin', 'Promoted biofilms of adherent-invasive E. coli and weakened mucus defences in lab models; named on the CDED avoid list.', 'CL');
+add(1, 0, 'Colour', 'Titanium dioxide', 'E171', 'titanium dioxide|titanium oxide|ci 77891|tio2', 'Nanoparticles built up in gut tissue and worsened colitis in mouse models; named on the CDED avoid list and no longer authorised in EU food.', 'CL');
+add(1, 0, 'Colour', 'Silver', 'E174', 'edible silver|silver leaf|silver color|color silver|ci 77820', 'Colour with a nanoparticle fraction that altered gut microbiota in some animal studies; human data are limited, so this is a precaution.', 'P');
+add(1, 0, 'Preservative', 'Sulfites', 'E220 to E228', 'sulfite|sulfur dioxide|sodium sulfite|sodium bisulfite|sodium hydrogen sulfite|sodium metabisulfite|potassium metabisulfite|potassium bisulfite|calcium sulfite|calcium bisulfite|e220|e221|e222|e223|e224|e226|e227|e228', 'Preservatives named on the CDED avoid list; proposed to feed sulfide-producing gut bacteria, though human evidence is limited.', 'C');
+const SULFITES = DB.length - 1; // excluded from fuzzy matching ("sulfate" is one letter away)
+
+// --- Tier 2: caution, excluded in Phases 1 and 2 (53) ---
+add(2, 3, 'Gum', 'Xanthan gum', 'E415', 'xanthan gum|xanthan|xantham gum', 'Bacterial fermentation gum; gut microbes ferment it and it shifts microbiota in lab studies, with unclear clinical meaning.', 'L');
+add(2, 3, 'Gum', 'Guar gum', 'E412', 'guar gum|guar|guaran', M.gum, 'P');
+add(2, 3, 'Gum', 'Gellan gum', 'E418', 'gellan gum|gellan', M.gum, 'P');
+add(2, 3, 'Gum', 'Gum arabic (acacia)', 'E414', 'gum arabic|arabic gum|acacia gum|gum acacia|acacia fibre|acacia fiber', M.gum, 'P');
+add(2, 3, 'Gum', 'Locust bean gum', 'E410', 'locust bean gum|carob bean gum|carob gum', M.gum, 'P');
+add(2, 3, 'Gum', 'Tara gum', 'E417', 'tara gum', M.gum, 'P');
+add(2, 3, 'Gum', 'Karaya gum', 'E416', 'karaya gum|karaya|sterculia gum', M.gum, 'P');
+add(2, 3, 'Gum', 'Tragacanth', 'E413', 'tragacanth|gum tragacanth|tragacanth gum', M.gum, 'P');
+add(2, 3, 'Gum', 'Konjac', 'E425', 'konjac|konjac gum|konjac glucomannan|glucomannan|konjac flour', M.gum, 'P');
+add(2, 3, 'Gum', 'Agar', 'E406', 'agar|agar agar', M.gum, 'P');
+add(2, 3, 'Alginate', 'Alginic acid', 'E400', 'alginic acid', M.alg, 'P');
+add(2, 3, 'Alginate', 'Sodium alginate', 'E401', 'sodium alginate|alginate', M.alg, 'P');
+add(2, 3, 'Alginate', 'Potassium alginate', 'E402', 'potassium alginate', M.alg, 'P');
+add(2, 3, 'Alginate', 'Calcium alginate', 'E404', 'calcium alginate', M.alg, 'P');
+add(2, 3, 'Alginate', 'Propylene glycol alginate', 'E405', 'propylene glycol alginate|propane 1 2 diol alginate', M.alg, 'P');
+add(2, 3, 'Cellulose', 'Cellulose (microcrystalline or powdered)', 'E460', 'microcrystalline cellulose|powdered cellulose|cellulose powder|cellulose', M.cel, 'P');
+add(2, 3, 'Cellulose', 'Methylcellulose', 'E461', 'methylcellulose|methyl cellulose', M.cel, 'P');
+add(2, 3, 'Cellulose', 'Hydroxypropyl cellulose', 'E463', 'hydroxypropyl cellulose|hydroxypropylcellulose', M.cel, 'P');
+add(2, 3, 'Cellulose', 'Hydroxypropyl methylcellulose', 'E464', 'hydroxypropyl methylcellulose|hydroxypropyl methyl cellulose|hydroxypropylmethylcellulose|hypromellose|hpmc', M.cel, 'P');
+add(2, 3, 'Cellulose', 'Ethyl methyl cellulose', 'E465', 'ethyl methyl cellulose|methyl ethyl cellulose|ethylmethylcellulose', M.cel, 'P');
+add(2, 3, 'Cellulose', 'Croscarmellose sodium', 'E468', 'croscarmellose|croscarmellose sodium|cross linked sodium carboxymethyl cellulose|crosslinked sodium carboxymethylcellulose|cross linked cellulose gum', M.cel, 'P');
+add(2, 3, 'Cellulose', 'Enzymatically hydrolysed carboxymethylcellulose', 'E469', 'enzymatically hydrolysed carboxymethylcellulose|enzymatically hydrolysed carboxymethyl cellulose|enzymatically hydrolysed cellulose gum|hydrolysed cellulose gum', M.cel, 'P');
+add(2, 3, 'Emulsifier', 'Lecithins', 'E322', 'lecithin|lecithine|lecitin|lecitina', 'Emulsifier from soy, sunflower or egg; restricted as an added emulsifier even though lecithin occurs naturally in whole eggs.', 'P');
+add(2, 3, 'Emulsifier', 'Mono- and diglycerides of fatty acids', 'E471', 'mono and diglycerides of fatty acids|mono and di glycerides of fatty acids|mono and diglycerides|mono and di glycerides|monoglycerides and diglycerides|mono diglycerides|monoglyceride|diglyceride|glyceryl monostearate|glycerol monostearate|glyceryl stearate', 'The most common emulsifier in bread and spreads; restricted under low-emulsifier diets, though lab findings for it are mixed.', 'P');
+add(2, 3, 'Emulsifier', 'Acetic acid esters of mono- and diglycerides', 'E472a', 'acetic acid esters of mono and diglycerides of fatty acids|acetic acid esters of mono and diglycerides|acetylated mono and diglycerides|acetylated monoglycerides|acetem', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Lactic acid esters of mono- and diglycerides', 'E472b', 'lactic acid esters of mono and diglycerides of fatty acids|lactic acid esters of mono and diglycerides|lactylated mono and diglycerides|lactem', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Citric acid esters of mono- and diglycerides', 'E472c', 'citric acid esters of mono and diglycerides of fatty acids|citric acid esters of mono and diglycerides|citrem', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'DATEM', 'E472e', 'datem|mono and diacetyl tartaric acid esters of mono and diglycerides of fatty acids|diacetyl tartaric acid esters of mono and diglycerides|diacetyltartaric acid esters of mono and diglycerides|diacetyl tartaric acid esters', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Sucrose esters of fatty acids', 'E473', 'sucrose esters of fatty acids|sucrose esters|sucrose fatty acid esters', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Polyglycerol esters of fatty acids', 'E475', 'polyglycerol esters of fatty acids|polyglycerol esters', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Polyglycerol polyricinoleate', 'E476', 'polyglycerol polyricinoleate|pgpr', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Propylene glycol esters of fatty acids', 'E477', 'propylene glycol esters of fatty acids|propane 1 2 diol esters of fatty acids|propylene glycol monostearate|propylene glycol mono and diesters', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Sodium stearoyl lactylate', 'E481', 'sodium stearoyl lactylate|sodium stearoyl 2 lactylate|ssl', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Calcium stearoyl lactylate', 'E482', 'calcium stearoyl lactylate|calcium stearoyl 2 lactylate', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Sorbitan monostearate', 'E491', 'sorbitan monostearate', M.sor, 'P');
+add(2, 3, 'Emulsifier', 'Sorbitan tristearate', 'E492', 'sorbitan tristearate', M.sor, 'P');
+add(2, 3, 'Emulsifier', 'Sorbitan monolaurate', 'E493', 'sorbitan monolaurate', M.sor, 'P');
+add(2, 3, 'Emulsifier', 'Sorbitan monooleate', 'E494', 'sorbitan monooleate', M.sor, 'P');
+add(2, 3, 'Emulsifier', 'Sorbitan monopalmitate', 'E495', 'sorbitan monopalmitate', M.sor, 'P');
+add(2, 3, 'Emulsifier', 'Ammonium phosphatides', 'E442', 'ammonium phosphatide|emulsifier ym', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Sodium, potassium and calcium salts of fatty acids', 'E470a', 'sodium potassium and calcium salts of fatty acids|salts of fatty acids|sodium stearate|potassium stearate|calcium stearate|e470', M.emu, 'P');
+add(2, 3, 'Emulsifier', 'Magnesium salts of fatty acids', 'E470b', 'magnesium salts of fatty acids|magnesium stearate', M.emu, 'P');
+add(2, 3, 'Sweetener', 'Sucralose', 'E955', 'sucralose|splenda', M.swe, 'L');
+add(2, 3, 'Sweetener', 'Aspartame', 'E951', 'aspartame|aspartam|nutrasweet', M.swe, 'L');
+add(2, 3, 'Sweetener', 'Saccharin', 'E954', 'saccharin|saccharine|sodium saccharin|saccharin sodium|calcium saccharin', M.swe, 'L');
+add(2, 3, 'Sweetener', 'Acesulfame K', 'E950', 'acesulfame k|acesulfame potassium|acesulfame|acesulfam k|ace k', M.swe, 'L');
+add(2, 3, 'Modified starch', 'Oxidised starch', 'E1404', 'oxidised starch|oxidized starch', M.sta, 'P');
+add(2, 3, 'Modified starch', 'Distarch phosphate', 'E1412', 'distarch phosphate', M.sta, 'P');
+add(2, 3, 'Modified starch', 'Acetylated distarch phosphate', 'E1414', 'acetylated distarch phosphate', M.sta, 'P');
+add(2, 3, 'Modified starch', 'Acetylated distarch adipate', 'E1422', 'acetylated distarch adipate', M.sta, 'P');
+add(2, 3, 'Modified starch', 'Hydroxypropyl distarch phosphate', 'E1442', 'hydroxypropyl distarch phosphate', M.sta, 'P');
+add(2, 3, 'Modified starch', 'Starch sodium octenyl succinate', 'E1450', 'starch sodium octenyl succinate|starch sodium octenylsuccinate|sodium starch octenyl succinate|octenyl succinate starch|osa starch', M.sta, 'P');
+add(2, 3, 'Modified starch', 'Modified starch (type not stated)', '', 'modified starch|modified food starch|modified corn starch|modified cornstarch|modified maize starch|modified waxy maize starch|modified tapioca starch|modified potato starch|modified wheat starch|modified rice starch', M.sta, 'P');
+const ADDITIVES = DB.length; // 65
+
+// --- Tier 3: permitted whole ingredients (shown for context; they never change the verdict) ---
+add(3, 1, 'Whole food', 'Fresh chicken breast', '', 'chicken breast|fresh chicken breast', M.man, 'F');
+add(3, 1, 'Whole food', 'Eggs', '', 'egg|whole egg', M.man, 'F');
+add(3, 1, 'Whole food', 'Potatoes', '', 'potato|potatoes', M.man + ' Cook, peel and cool them for resistant starch.', 'F');
+add(3, 1, 'Whole food', 'Bananas', '', 'banana', M.man, 'F');
+add(3, 1, 'Whole food', 'Apples', '', 'apple', M.man + ' A natural source of pectin.', 'F');
+add(3, 1, 'Whole food', 'Natural pectin', 'E440', 'pectin|apple pectin|citrus pectin|fruit pectin', 'Soluble fibre found in apples and citrus; CDED uses whole fruit as its pectin source.', 'F');
+add(3, 1, 'Whole food', 'Olive oil', '', 'olive oil|extra virgin olive oil', 'Permitted cooking fat in every CDED phase.', 'F');
+add(3, 1, 'Whole food', 'Plain white rice', '', 'rice|white rice|rice noodles', 'Permitted in every CDED phase.', 'F');
+add(3, 1, 'Whole food', 'Avocado', '', 'avocado', 'Permitted in every CDED phase in limited portions.', 'F');
+add(3, 2, 'Whole food', 'Quinoa', '', 'quinoa', 'Added to the CDED food list from Phase 2.', 'F');
+add(3, 2, 'Whole food', 'Almonds and walnuts', '', 'almond|walnut', 'Unsalted, unroasted nuts are added in small portions from Phase 2.', 'F');
+
+/* ===== 2. Helpers ===== */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ic = (name, cls = '') => `<svg class="ic ${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+const money = n => '$' + n.toLocaleString('en-US');
+// localStorage can be unavailable (private mode, blocked storage): never let it break the app
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('pg.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('pg.' + k, JSON.stringify(v)); } catch (e) { /* storage full or blocked */ } }
+};
+const state = {
+  phase: [1, 2, 3].includes(store.get('phase', 1)) ? store.get('phase', 1) : 1,
+  camo: store.get('camo', false) === true,
+  history: Array.isArray(store.get('history', [])) ? store.get('history', []) : [],
+  tab: 'scan', scan: null, filter: 0, q: ''
+};
+// Copy that changes in camouflage mode: [clinical, neutral]
+const COPY = {
+  doc: ['PureGut CDED & Additive Lens', 'PurePlate Clean Food Lens'],
+  appName: ['PureGut', 'PurePlate'],
+  appSub: ['CDED & Additive Lens', 'Clean Food Lens'],
+  scanH: ["Crohn's Disease Mucosal Disruptor Scanner", 'Check a product'],
+  scanP: ['Screens barcodes and ingredient lists for 65 additives restricted in the CDED and low-emulsifier diets.', 'Scan a barcode or an ingredient list to check it against your list.'],
+  guideH: ['Additive library', 'Ingredient guide'],
+  guideP: ["65 emulsifiers, thickeners and other additives restricted in Crohn's disease diet protocols, plus the whole foods CDED is built on.", '65 ingredients on the avoid and caution lists, plus whole foods that fit the plan.'],
+  evH: ['What the evidence says, and its limits', 'About this guide'],
+  navImpact: ['Impact', 'Community'],
+  disc: ['For educational and dietary lifestyle reference under CDED protocols. Not intended to diagnose, treat, or replace consultation with a gastroenterologist or IBD specialized dietitian.', 'For educational and dietary lifestyle reference. Not intended to diagnose, treat, or replace advice from your doctor or dietitian.']
+};
+const t = k => COPY[k][state.camo ? 1 : 0];
+let toastTimer = 0;
+function toast(msg) {
+  const el = $('#toast'); el.textContent = msg; el.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 4500);
+}
+// One progress bar for OCR and lookups. progress(null) hides it.
+function progress(frac, label) {
+  const box = $('#prog'); box.hidden = frac == null;
+  if (frac == null) return;
+  $('#progText').textContent = label;
+  $('#progBar').style.width = Math.round(Math.max(0.04, Math.min(1, frac)) * 100) + '%';
+}
+
+/* ===== 3. Matcher: normalise, tokenise, greedy longest n-gram match ===== */
+const CLASS_RE = /\b(emulsifiers?|thickeners?|stabili[sz]ers?|vegetable gums?|gelling agents?|sweeteners?|colors?|preservatives?|humectants?|antioxidants?)\s*[:(\[]\s*([^)\].;]{1,80})/g;
+function norm(s) {
+  return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/sulph/g, 'sulf').replace(/colour/g, 'color').replace(/lyz/g, 'lys')
+    .replace(/\bvitamins?\s+e\b/g, 'vitamine')                       // "vitamin E 400 IU" is not E400
+    // Australian style "emulsifier (471, 322)": give bare class numbers an "e" prefix
+    .replace(CLASS_RE, (m, cls, list) => cls + ' ( ' + list.replace(/\b(\d{3,4}[a-f]?)\b/g, 'e$1'))
+    .replace(/\b(?:e|ins)[\s.-]{0,2}(\d{3,4}[a-z]{0,4})\b/g, 'e$1')  // "E 433", "E-433", "INS 433"
+    .replace(/(\d),(\d)/g, '$1 $2')                                  // "propane-1,2-diol"
+    .replace(/[,;:()\[\]{}|*\u2022\u00b7]+|\.(?!\d)/g, ' qq ')       // separators become a sentinel token
+    .replace(/[^a-z0-9]+/g, ' ').trim();
+}
+const ALIAS = new Map();   // normalised alias -> entry id
+const FUZZY = [];          // long aliases eligible for one-typo OCR matching
+let MAXN = 1;
+DB.forEach(e => {
+  const keys = e.aliases.slice();
+  if (/^E\d{3,4}[a-z]?$/.test(e.eNumber)) keys.push(e.eNumber);
+  keys.forEach(a => {
+    const k = norm(a), n = k.split(' ').length;
+    if (!ALIAS.has(k)) ALIAS.set(k, e.id);
+    if (n > MAXN) MAXN = n;
+    if (e.riskTier < 3 && e.id !== SULFITES && k.length >= 10) FUZZY.push({ k, n, id: e.id });
+  });
+});
+function lookup(key) {
+  let id = ALIAS.get(key);
+  if (id === undefined && key.endsWith('s')) id = ALIAS.get(key.slice(0, -1));                         // plurals
+  if (id === undefined && /^e\d{3,4}[a-z]+$/.test(key)) id = ALIAS.get(key.replace(/[ivx]+$/, ''));    // E460ii -> E460
+  return id;
+}
+// True when two strings differ by at most one inserted, deleted or substituted character
+function within1(a, b) {
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0, x = a.length - 1, y = b.length - 1;
+  while (i <= x && i <= y && a[i] === b[i]) i++;
+  while (x >= i && y >= i && a[x] === b[y]) { x--; y--; }
+  return x - i < 1 && y - i < 1;
+}
+function matchInto(text, fuzzy, hits) {
+  const tok = norm(text).split(' ').filter(Boolean), used = new Uint8Array(tok.length);
+  const free = (i, n) => { for (let k = i; k < i + n; k++) if (used[k]) return false; return true; };
+  // Whole foods only count when they stand alone ("apple", not "apple juice concentrate")
+  const edge = x => x === undefined || x === 'qq' || /^\d/.test(x);
+  const alone = (i, n) => edge(tok[i - 1]) && edge(tok[i + n]);
+  const take = (i, n, id, approx) => {
+    for (let k = i; k < i + n; k++) used[k] = 1;
+    if (!hits.has(id)) hits.set(id, { id, found: tok.slice(i, i + n).join(' '), approx });
+  };
+  // Longest phrases first so "cellulose gum" is not also counted as plain "cellulose"
+  for (let n = Math.min(MAXN, tok.length); n >= 1; n--) {
+    for (let i = 0; i + n <= tok.length; i++) {
+      if (!free(i, n)) continue;
+      const id = lookup(tok.slice(i, i + n).join(' '));
+      if (id === undefined || (DB[id].riskTier === 3 && !alone(i, n))) continue;
+      take(i, n, id, false);
+    }
+  }
+  if (!fuzzy) return;
+  for (let n = 4; n >= 1; n--) {
+    for (let i = 0; i + n <= tok.length; i++) {
+      if (!free(i, n)) continue;
+      const key = tok.slice(i, i + n).join(' ');
+      if (key.length < 9 || key.indexOf('qq') > -1) continue;
+      const f = FUZZY.find(a => a.n === n && within1(a.k, key));
+      if (f) take(i, n, f.id, true);
+    }
+  }
+}
+// text: free ingredient text. tags: Open Food Facts taxonomy tags such as "en:e433".
+function analyse({ text = '', tags = [], fuzzy = false }) {
+  const hits = new Map();
+  if (tags.length) matchInto(tags.map(x => String(x).replace(/^[a-z]{2,3}:/, '').replace(/-/g, ' ')).join(' , '), false, hits);
+  if (text) matchInto(text, fuzzy, hits);
+  return [...hits.values()];
+}
+
+/* ===== 4. Verdict ===== */
+// 'bad' = excluded in every phase, 'warn' = excluded in the selected phase, 'ok' = within the phase
+function statusOf(e, phase) {
+  if (e.riskTier === 3) return 'ok';
+  if (e.cdedPhaseAllowed === 0) return 'bad';
+  return e.cdedPhaseAllowed > phase ? 'warn' : 'ok';
+}
+function verdictOf(scan, phase) {
+  if (scan.unknown) return 'unknown';
+  const st = scan.hits.filter(h => DB[h.id] && DB[h.id].riskTier < 3).map(h => statusOf(DB[h.id], phase));
+  return st.includes('bad') ? 'red' : st.includes('warn') ? 'amber' : 'green';
+}
+const WHY = {
+  notfound: 'This barcode is not in Open Food Facts. Use Read label on the ingredient list instead.',
+  nodata: 'Open Food Facts has no ingredient list for this product. Use Read label on the pack instead.',
+  net: 'The product lookup could not connect. Check your connection, or use Read label.',
+  rate: 'Open Food Facts is limiting requests. Wait a minute, then try again.',
+  ocr: 'No ingredient text could be read. Move closer, hold steady and avoid glare.'
+};
+const V_ICON = { red: 'octagon-alert', amber: 'triangle-alert', green: 'circle-check', unknown: 'circle-help' };
+
+/* ===== 5. Views ===== */
+function segHTML() {
+  return [[1, 'Weeks 1 to 6'], [2, 'Weeks 7 to 12'], [3, 'Maintenance']].map(([n, w]) =>
+    `<button type="button" data-phase="${n}" aria-pressed="${state.phase === n}">Phase ${n}<small>${w}</small></button>`).join('');
+}
+function ruleShort(e, p) {
+  if (e.riskTier === 3) return e.cdedPhaseAllowed <= p ? 'Permitted' : 'From Phase ' + e.cdedPhaseAllowed;
+  const s = statusOf(e, p);
+  return s === 'bad' ? 'Avoid' : s === 'warn' ? 'Not in Phase ' + p : 'Occasional';
+}
+function ruleLong(e) {
+  const c = state.camo;
+  if (e.riskTier === 3) return `Permitted from Phase ${e.cdedPhaseAllowed}.`;
+  if (e.cdedPhaseAllowed === 0) return c ? 'Avoid at every stage.' : 'Excluded in every CDED phase.';
+  return 'Excluded in Phases 1 and 2. In maintenance, agree any occasional use with your dietitian.';
+}
+// One expandable card per entry. hit is passed when the entry was found in a scan.
+function cardHTML(e, hit) {
+  const p = state.phase, s = e.riskTier === 3 ? (e.cdedPhaseAllowed <= p ? 'ok' : 'warn') : statusOf(e, p);
+  const also = hit ? '' : `<p class="text-mut"><span class="font-semibold">Label names:</span> ${esc(e.aliases.slice(0, 6).join(', '))}</p>`;
+  const found = hit ? `<p class="text-mut">${hit.approx ? 'Possible match. The photo read' : 'Found as'} &ldquo;${esc(hit.found)}&rdquo;</p>` : '';
+  return `<details class="add" data-s="${s}"><summary><span class="dot"></span>
+    <span class="min-w-0 flex-1"><span class="block font-semibold leading-tight">${esc(e.canonicalName)}</span>
+    <span class="block text-xs text-mut">${esc([e.eNumber, e.group].filter(Boolean).join(', '))}</span></span>
+    <span class="pill">${ruleShort(e, p)}</span>${ic('chevron-down', 'chev h-5 w-5 text-mut')}</summary>
+    <div class="space-y-2 px-4 pb-4 text-sm">${found}<p>${esc(e.mechanismSummary)}</p>
+    <p><span class="font-semibold">Phase rule:</span> ${ruleLong(e)}</p>
+    <p class="text-mut"><span class="font-semibold">Basis:</span> ${e.sources.map(x => SRC[x]).join('; ')}.</p>${also}</div></details>`;
+}
+function renderResult() {
+  const box = $('#result'), s = state.scan;
+  box.hidden = !s;
+  if (!s) return;
+  const p = state.phase, c = state.camo, v = verdictOf(s, p);
+  const order = { bad: 0, warn: 1, ok: 2 };
+  const flagged = s.hits.filter(h => DB[h.id] && DB[h.id].riskTier < 3)
+    .sort((a, b) => order[statusOf(DB[a.id], p)] - order[statusOf(DB[b.id], p)]);
+  const whole = s.hits.filter(h => DB[h.id] && DB[h.id].riskTier === 3);
+  const count = k => flagged.filter(h => statusOf(DB[h.id], p) === k).length;
+  const thing = c ? 'ingredient' : 'additive';
+  const head = {
+    red: [c ? 'Skip this one' : 'Prohibited', c ? `${plural(count('bad'), thing)} on your avoid list` : `${plural(count('bad'), thing)} excluded in every CDED phase`],
+    amber: [c ? 'Not for this stage' : 'Phase restricted', `${plural(count('warn'), thing)} excluded in Phase ${p}`],
+    green: [c ? 'Looks clean' : 'Additive screen clear', count('ok') ? `${plural(count('ok'), 'caution ' + thing)} found. Keep these occasional.` : 'None of the 65 listed additives were found.'],
+    unknown: ['Not enough to check', WHY[s.why] || WHY.ocr]
+  }[v];
+  box.innerHTML = `
+    <div class="verdict" data-v="${v}">
+      <span class="stamp"><svg class="stamp-shape" aria-hidden="true"><use href="#i-stamp"/></svg>${ic(V_ICON[v], 'h-9 w-9')}</span>
+      <div class="min-w-0"><p class="hl text-3xl">${head[0]}</p><p class="mt-1 text-sm">${esc(head[1])}</p></div>
+    </div>
+    <div><p class="text-lg font-semibold leading-tight">${esc(s.title)}</p>
+      ${s.code ? `<p class="text-sm text-mut">Open Food Facts, barcode ${esc(s.code)}</p>` : ''}</div>
+    <div class="seg" data-seg>${segHTML()}</div>
+    ${flagged.length ? `<h2 class="pt-1 font-semibold">${c ? 'Flagged ingredients' : 'Flagged additives'}</h2>
+      <div class="space-y-2">${flagged.map(h => cardHTML(DB[h.id], h)).join('')}</div>` : ''}
+    ${whole.length ? `<h2 class="pt-1 font-semibold">Whole ingredients recognised</h2>
+      <div class="flex flex-wrap gap-2">${whole.map(h => { const e = DB[h.id];
+        return `<span class="chip">${ic(e.cdedPhaseAllowed <= p ? 'circle-check' : 'triangle-alert', 'h-4 w-4')}${esc(e.canonicalName)}${e.cdedPhaseAllowed > p ? ', from Phase ' + e.cdedPhaseAllowed : ''}</span>`; }).join('')}</div>` : ''}
+    ${v === 'unknown' ? '' : `<p class="text-sm text-mut">This screens additives only. ${c ? 'Your plan' : 'CDED'} also limits whole food groups such as dairy, wheat and processed meat, so follow your dietitian's food list.</p>`}
+    <details class="card"><summary class="flex cursor-pointer items-center gap-3 font-semibold">${ic('scan-text')}<span class="flex-1">Text that was checked</span>${ic('chevron-down', 'chev h-5 w-5 text-mut')}</summary>
+      <textarea id="reText" class="field mt-3" rows="5" aria-label="Ingredient text that was checked">${esc(s.text || '')}</textarea>
+      <button id="reCheck" type="button" class="btn btn-tonal mt-2 w-full">Check this text again</button></details>
+    ${s.kind === 'barcode' ? '<p class="text-xs text-mut">Product data from Open Food Facts contributors under the Open Database License. It is crowd-sourced and can be wrong or out of date, so compare it with the pack.</p>' : ''}
+    <button id="again" type="button" class="btn btn-out w-full">${ic('scan-barcode')}Check another product</button>`;
+}
+function renderGuide() {
+  const names = ['All', 'Avoid', 'Caution', 'Permitted'];
+  $('#filters').innerHTML = names.map((n, i) => `<button type="button" class="chip" data-filter="${i}" aria-pressed="${state.filter === i}">${n}</button>`).join('');
+  const q = norm(state.q).replace(/ qq /g, ' ');
+  const list = DB.filter(e => (!state.filter || e.riskTier === state.filter) &&
+    (!q || norm(e.canonicalName + ' ' + e.eNumber + ' ' + e.group + ' ' + e.aliases.join(' ')).indexOf(q) > -1));
+  $('#gCount').textContent = list.length ? `${plural(list.length, 'entry').replace('entrys', 'entries')} shown` : 'Nothing matches. Try a shorter name or the E-number.';
+  $('#gList').innerHTML = list.map(e => cardHTML(e, null)).join('');
+}
+function renderHistory() {
+  const h = state.history;
+  $('#clearHist').hidden = !h.length;
+  $('#hList').innerHTML = h.length ? h.map((s, i) => {
+    const v = verdictOf(s, state.phase), d = new Date(s.t);
+    return `<button type="button" class="add flex w-full items-center gap-3 px-4 py-3 text-left" data-open="${i}" data-s="${{ red: 'bad', amber: 'warn', green: 'ok', unknown: 'na' }[v]}">
+      <span class="dot"></span><span class="min-w-0 flex-1"><span class="block truncate font-semibold">${esc(s.title)}</span>
+      <span class="block text-xs text-mut">${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span></span>
+      <span class="pill">${{ red: 'Avoid', amber: 'Not in Phase ' + state.phase, green: 'Clear', unknown: 'Unread' }[v]}</span></button>`;
+  }).join('') : '<p class="card text-sm text-mut">No scans yet. Products you check are saved here, on this device only.</p>';
+}
+// Fundraiser dashboard. All figures are illustrative: nothing here takes or records a payment.
+const IMPACT = {
+  raised: 11200, goal: 15000,
+  rows: [['armchair', 'Sponsored retreat seats', 14, 20, ''], ['hand-coins', 'Patient dietary grants', 9, 15, ''], ['microscope', 'Mucosal barrier clinical research', 2400, 4000, '$']],
+  ledger: [['PIF-0147', '28 Sep 2026', 250, 'Retreat seat'], ['PIF-0146', '21 Sep 2026', 60, 'Dietary grant'], ['PIF-0145', '14 Sep 2026', 500, 'Research fund'], ['PIF-0144', '02 Sep 2026', 125, 'Retreat seat']]
+};
+function renderImpact() {
+  const c = state.camo, pct = Math.round(IMPACT.raised / IMPACT.goal * 100);
+  const neutral = ['Sponsored retreat seats', 'Dietary grants', 'Nutrition research'];
+  $('#v-impact').innerHTML = `
+    <h1 class="hl text-3xl">${c ? 'Community' : 'Impact'}</h1>
+    <p class="rounded-2xl border border-out-v px-4 py-3 text-sm text-mut"><span class="font-semibold text-ink">Sample figures.</span> This dashboard is a preview with illustrative numbers. No money is collected here.</p>
+    <div class="card tone-ter space-y-3">
+      <p class="text-sm font-medium">${c ? '2027 Wellness &amp; Cooking Retreat' : '2027 Crohn&#39;s Patient Wellness &amp; CDED Cooking Retreat'}</p>
+      <p class="hl text-4xl">${money(IMPACT.raised)} <span class="text-base font-medium">of ${money(IMPACT.goal)} raised</span></p>
+      <div class="bar big" role="progressbar" aria-label="Fundraising progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%"></i></div>
+      <p class="text-sm">${pct}% of the goal, ${money(IMPACT.goal - IMPACT.raised)} to go</p>
+    </div>
+    <div class="space-y-2">${IMPACT.rows.map((r, i) => `<div class="card flex items-center gap-3">${ic(r[0], 'text-pri')}
+      <div class="min-w-0 flex-1"><div class="flex justify-between gap-2 text-sm"><span class="font-semibold">${c ? neutral[i] : r[1]}</span>
+      <span class="flex-none text-mut">${r[4] ? money(r[2]) + ' of ' + money(r[3]) : r[2] + ' of ' + r[3]}</span></div>
+      <div class="bar mt-2"><i style="width:${Math.round(r[2] / r[3] * 100)}%"></i></div></div></div>`).join('')}</div>
+    <button id="pif" type="button" class="btn btn-fill w-full">${ic('gift')}Pay it forward</button>
+    <div class="card"><h2 class="font-semibold">Sample receipt ledger</h2>
+      <p class="mb-2 text-xs text-mut">Receipts would be listed here without donor names.</p>
+      <ul class="divide-y divide-out-v text-sm">${IMPACT.ledger.map(l => `<li class="flex items-center justify-between gap-3 py-2">
+        <span><span class="block font-medium">${esc(l[3])}</span><span class="block text-xs text-mut">${esc(l[0])}, ${esc(l[1])}</span></span>
+        <span class="font-semibold">${money(l[2])}</span></li>`).join('')}</ul></div>`;
+}
+function renderAll() {
+  document.querySelectorAll('[data-seg]').forEach(el => { el.innerHTML = segHTML(); });
+  renderResult(); renderGuide(); renderHistory(); renderImpact();
+}
+// Camouflage mode swaps clinical wording and warning colours for a neutral identity
+function applyMode() {
+  document.documentElement.dataset.camo = state.camo ? '1' : '0';
+  document.title = t('doc');
+  document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t(el.dataset.t); });
+  $('#camo').setAttribute('aria-pressed', String(state.camo));
+  $('#camoIcon').innerHTML = `<use href="#i-${state.camo ? 'eye-off' : 'eye'}"/>`;
+  const tc = $('meta[name="theme-color"]'); if (tc) tc.content = state.camo ? '#475569' : '#0E6B58';
+  renderAll();
+}
+function setTab(tab) {
+  state.tab = tab;
+  ['scan', 'guide', 'history', 'impact'].forEach(n => { $('#v-' + n).hidden = n !== tab; });
+  document.querySelectorAll('[data-tab]').forEach(b => {
+    if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
+  if (tab !== 'scan') stopCamera();
+  window.scrollTo(0, 0);
+}
+// Show a finished scan and keep it in history (last 30, this device only)
+function showScan(s, replaces) {
+  s.t = Date.now();
+  s.text = String(s.text || '').slice(0, 1500);
+  s.tags = (s.tags || []).slice(0, 150);
+  state.scan = s;
+  if (!(s.unknown && (s.why === 'net' || s.why === 'rate'))) {
+    state.history = [s].concat(state.history.filter(h => h.t !== replaces && !(s.code && h.code === s.code))).slice(0, 30);
+    store.set('history', state.history);
+  }
+  setTab('scan'); renderResult(); renderHistory();
+  const box = $('#result'); if (box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ===== 6. Camera and live barcode scanning ===== */
+const PONYFILL = 'https://cdn.jsdelivr.net/npm/barcode-detector@3.2.2/dist/iife/ponyfill.js';
+let stream = null, detector = null, scanTimer = 0, busy = false;
+const video = $('#video');
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement('script'); s.crossOrigin = 'anonymous'; s.src = src; s.onload = res; s.onerror = () => rej(new Error('script'));
+    document.head.appendChild(s);
+  });
+}
+// Native BarcodeDetector where it reads retail codes; otherwise a zxing-wasm ponyfill loaded on demand
+async function getDetector() {
+  if (detector) return detector;
+  const want = ['ean_13', 'ean_8', 'upc_a', 'upc_e'];
+  try {
+    if ('BarcodeDetector' in window) {
+      const have = await window.BarcodeDetector.getSupportedFormats();
+      if (have.includes('ean_13')) return (detector = new window.BarcodeDetector({ formats: want.filter(f => have.includes(f)) }));
+    }
+  } catch (e) { /* fall through to the ponyfill */ }
+  if (!window.BarcodeDetectionAPI) await loadScript(PONYFILL);
+  return (detector = new window.BarcodeDetectionAPI.BarcodeDetector({ formats: want }));
+}
+function camUI(on, msg) {
+  video.hidden = !on; $('#vfIdle').hidden = on; $('#vfFrame').hidden = !on;
+  const chip = $('#vfChip'); chip.hidden = !msg; chip.textContent = msg || '';
+  $('#vf').classList.toggle('on', on);
+  $('#btnCamText').textContent = on ? 'Stop camera' : 'Scan barcode';
+}
+async function startCamera() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    return toast('This browser cannot open the camera here. Choose a photo or type the barcode.');
+  }
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } });
+  } catch (e) {
+    return toast(e && e.name === 'NotAllowedError' ? 'Camera access is blocked. Allow it in your browser settings, or choose a photo.' : 'No camera was found. Choose a photo or type the barcode.');
+  }
+  video.srcObject = stream;
+  camUI(true, 'Starting the barcode reader');
+  try { await video.play(); } catch (e) { /* autoplay attribute covers this on iOS */ }
+  let det;
+  try { det = await getDetector(); } catch (e) { det = null; }
+  if (!stream) return;                       // stopped while the reader was loading
+  if (!det) return camUI(true, 'Barcode reading is unavailable. Use Read label.');
+  camUI(true, 'Hold the barcode inside the frame');
+  const tick = () => {
+    scanTimer = setTimeout(async () => {
+      if (!stream) return;
+      try {
+        if (video.readyState >= 2 && !busy) {
+          const codes = await det.detect(video);
+          const hit = codes.find(c => /^\d{8,14}$/.test(c.rawValue || ''));
+          if (hit) { if (navigator.vibrate) navigator.vibrate(60); stopCamera(); return lookupBarcode(hit.rawValue); }
+        }
+      } catch (e) { /* a single unreadable frame is normal */ }
+      tick();
+    }, 220);
+  };
+  tick();
+}
+function stopCamera() {
+  clearTimeout(scanTimer);
+  if (stream) { stream.getTracks().forEach(tr => tr.stop()); stream = null; }
+  if (video) video.srcObject = null;
+  camUI(false, '');
+}
+
+/* ===== 7. OCR with Tesseract.js (runs in its own Web Worker) ===== */
+let worker = null;
+// Downscale, convert to greyscale and lift contrast: faster and more accurate on glossy packs
+function prep(src, w, h) {
+  const k = Math.min(1, 1800 / Math.max(w, h)), cv = document.createElement('canvas');
+  cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+  const g = cv.getContext('2d', { willReadFrequently: true });
+  g.drawImage(src, 0, 0, cv.width, cv.height);
+  const im = g.getImageData(0, 0, cv.width, cv.height), d = im.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const y = (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2] - 128) * 1.3 + 128;
+    d[i] = d[i + 1] = d[i + 2] = y;          // Uint8ClampedArray clamps to 0..255
+  }
+  g.putImageData(im, 0, 0);
+  return cv;
+}
+function fileToImage(file) {
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); res(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('image')); };
+    img.src = url;
+  });
+}
+async function readLabel(src, w, h) {
+  if (busy) return;
+  if (!window.Tesseract) return toast('The text reader did not load. Check your connection and reload, or type the ingredients.');
+  busy = true; progress(0.05, 'Loading the text reader');
+  try {
+    const canvas = prep(src, w, h);
+    if (!worker) {
+      worker = await window.Tesseract.createWorker('eng', 1, { logger: m => {
+        if (m.status === 'recognizing text') progress(0.35 + 0.65 * m.progress, 'Reading the label');
+        else progress(0.05 + 0.3 * (m.progress || 0), 'Loading the text reader');
+      } });
+    }
+    const out = await worker.recognize(canvas);
+    const text = String((out.data && out.data.text) || '').trim();
+    const words = norm(text).split(' ').filter(x => x.length > 2).length;
+    showScan({ kind: 'photo', title: 'Label photo', text, hits: analyse({ text, fuzzy: true }), unknown: words < 4, why: 'ocr' });
+  } catch (e) {
+    worker = null;
+    toast('The label could not be read. Try again with a sharper photo, or type the ingredients.');
+  } finally { busy = false; progress(null); }
+}
+async function readFile(file) {
+  if (!file) return;
+  try { const img = await fileToImage(file); await readLabel(img, img.naturalWidth, img.naturalHeight); }
+  catch (e) { toast('That file could not be opened as a photo.'); }
+}
+
+/* ===== 8. Open Food Facts lookup =====
+   API v3 first, v2 as a fallback. Limit is 15 product reads a minute per person, so results
+   are cached for a week and lookups are throttled. Browsers cannot set a custom User-Agent. */
+const OFF = 'https://world.openfoodfacts.org/api/';
+const FIELDS = 'code,product_name,brands,ingredients_text,ingredients_text_en,additives_tags,ingredients_tags';
+let calls = [];
+async function fetchProduct(code) {
+  for (const v of ['v3', 'v2']) {
+    let res, j = null;
+    try { res = await fetch(`${OFF}${v}/product/${code}.json?fields=${FIELDS}`); } catch (e) { continue; }
+    if (res.status === 429) throw new Error('rate');
+    try { j = await res.json(); } catch (e) { /* not JSON */ }
+    const p = j && j.product;
+    if (p && (p.product_name || p.ingredients_text || p.ingredients_text_en || (p.additives_tags && p.additives_tags.length) || p.code)) {
+      return { name: [p.product_name, p.brands].filter(Boolean).join(', '), text: p.ingredients_text_en || p.ingredients_text || '',
+        tags: [].concat(p.additives_tags || [], p.ingredients_tags || []) };
+    }
+    if (res.status === 404 || (j && (j.status === 0 || (j.result && j.result.id === 'product_not_found')))) return null;
+  }
+  throw new Error('net');
+}
+async function lookupBarcode(raw) {
+  const code = String(raw).replace(/\D/g, '');
+  if (code.length < 8 || code.length > 14) return toast('A barcode has 8 to 14 digits.');
+  if (busy) return;
+  const cache = store.get('off', {});
+  let p = cache[code] && Date.now() - cache[code].t < 6048e5 ? cache[code].p : undefined;
+  if (p === undefined) {
+    const now = Date.now(); calls = calls.filter(x => now - x < 6e4);
+    if (calls.length >= 12) return toast('Too many lookups this minute. Wait a moment, then try again.');
+    calls.push(now); busy = true; progress(0.5, 'Looking up the product');
+    try { p = await fetchProduct(code); }
+    catch (e) { return showScan({ kind: 'barcode', code, title: 'Barcode ' + code, hits: [], unknown: true, why: e.message === 'rate' ? 'rate' : 'net' }); }
+    finally { busy = false; progress(null); }
+    cache[code] = { t: now, p };
+    const keys = Object.keys(cache).sort((a, b) => cache[a].t - cache[b].t);
+    while (keys.length > 40) delete cache[keys.shift()];
+    store.set('off', cache);
+  }
+  if (!p) return showScan({ kind: 'barcode', code, title: 'Barcode ' + code, hits: [], unknown: true, why: 'notfound' });
+  showScan({ kind: 'barcode', code, title: p.name || 'Barcode ' + code, text: p.text, tags: p.tags,
+    hits: analyse({ text: p.text, tags: p.tags }), unknown: !p.text && !p.tags.length, why: 'nodata' });
+}
+
+/* ===== 9. Events and start-up ===== */
+document.addEventListener('click', ev => {
+  const el = ev.target.closest('[data-phase],[data-tab],[data-filter],[data-open],#camo,#btnCam,#btnSnap,#reCheck,#again,#pif,#clearHist');
+  if (!el) return;
+  if (el.dataset.phase) { state.phase = +el.dataset.phase; store.set('phase', state.phase); renderAll(); }
+  else if (el.dataset.tab) setTab(el.dataset.tab);
+  else if (el.dataset.filter) { state.filter = +el.dataset.filter; renderGuide(); }
+  else if (el.dataset.open) { state.scan = state.history[+el.dataset.open]; setTab('scan'); renderResult(); const b = $('#result'); if (b.scrollIntoView) b.scrollIntoView({ block: 'start' }); }
+  else if (el.id === 'camo') { state.camo = !state.camo; store.set('camo', state.camo); applyMode(); }
+  else if (el.id === 'btnCam') { if (stream) stopCamera(); else startCamera(); }
+  else if (el.id === 'btnSnap') {
+    // Camera running: read the current frame. Otherwise open the phone camera through a file input.
+    if (stream && video.videoWidth) { readLabel(video, video.videoWidth, video.videoHeight); stopCamera(); }
+    else $('#fileCam').click();
+  }
+  else if (el.id === 'reCheck') {
+    const s = state.scan, text = $('#reText').value;
+    showScan({ kind: s.kind, code: s.code, title: s.title, text, tags: s.tags, hits: analyse({ text, tags: s.tags || [], fuzzy: s.kind === 'photo' }), unknown: !text.trim() && !(s.tags || []).length, why: 'ocr' }, s.t);
+  }
+  else if (el.id === 'again') { state.scan = null; renderResult(); window.scrollTo(0, 0); }
+  else if (el.id === 'pif') {
+    IMPACT.ledger.unshift(['Preview', new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }), 25, 'Preview pledge, not charged']);
+    renderImpact(); toast('Preview only. No payment was taken.');
+  }
+  else if (el.id === 'clearHist') { state.history = []; store.set('history', []); renderHistory(); toast('History cleared.'); }
+});
+['fileCam', 'filePick'].forEach(id => $('#' + id).addEventListener('change', ev => { const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; readFile(f); }));
+$('#fCode').addEventListener('submit', ev => { ev.preventDefault(); lookupBarcode($('#inCode').value); });
+$('#fText').addEventListener('submit', ev => {
+  ev.preventDefault();
+  const text = $('#inText').value.trim();
+  if (!text) return toast('Paste or type the ingredient list first.');
+  showScan({ kind: 'typed', title: 'Typed ingredients', text, hits: analyse({ text }), unknown: false });
+});
+$('#q').addEventListener('input', ev => { state.q = ev.target.value; renderGuide(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopCamera(); });
+
+// Offline support: sw.js caches this page and the pinned library files. Service workers need
+// HTTPS (GitHub Pages provides it). The installed name in manifest.webmanifest stays neutral on purpose.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => { /* offline support is optional */ }); });
+}
+
+window.PureGut = { DB, ADDITIVES, analyse, verdictOf };   // handy for checking the dataset in the console
+applyMode();
+setTab('scan');
+})();
+</script>
+</body>
+</html>
