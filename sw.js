@@ -1,8 +1,9 @@
 /* PureGut / PurePlate service worker: makes the app load without a connection.
    Change VERSION whenever you upload a new index.html so old caches are cleared. */
-const VERSION = 'pureplate-v1';
+const VERSION = 'pureplate-v2';
 // The app itself (same folder as this file)
-const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png',
+  './icon-maskable-512.png', './apple-touch-icon.png'];
 // Small pinned files worth fetching up front; failures here never block the install
 const EXTRAS = [
   'https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js',
