@@ -12,6 +12,7 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
+<script>try{var d=document.documentElement,t=JSON.parse(localStorage.getItem('pg.theme'));if(t==='light'||t==='dark')d.setAttribute('data-theme',t);if(JSON.parse(localStorage.getItem('pg.camo'))===true)d.setAttribute('data-camo','1')}catch(e){}</script>
 <!-- Dependencies, pinned. Tailwind is precompiled into the style block below (its CDN build is for development only). -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,11 +21,15 @@
 <style>
 /* Tailwind CSS v3.4 (MIT), precompiled: only the classes this page uses */
 :root{color-scheme:light dark;--pri:14 107 88;--on-pri:255 255 255;--pri-c:189 238 221;--on-pri-c:0 32 25;--sur:244 250 246;--sur-c:232 240 235;--sur-h:219 229 223;--on-sur:21 29 26;--on-var:63 73 68;--out:111 121 115;--out-v:190 201 194;--ter-c:240 219 255;--on-ter-c:37 13 51;--ter:107 78 122;--bad:179 38 30;--bad-c:255 218 214;--on-bad-c:65 0 2;--warn:128 86 0;--warn-c:255 222 166;--on-warn-c:40 25 0;--ok:27 108 58;--ok-c:168 245 183;--on-ok-c:0 33 11}
-@media (prefers-color-scheme:dark){:root{--pri:128 216 194;--on-pri:0 56 46;--pri-c:0 81 67;--on-pri-c:189 238 221;--sur:14 21 18;--sur-c:26 33 30;--sur-h:38 46 42;--on-sur:222 228 223;--on-var:190 201 194;--out:137 147 141;--out-v:63 73 68;--ter-c:82 55 96;--on-ter-c:240 219 255;--ter:217 188 232;--bad:255 180 171;--bad-c:147 0 10;--on-bad-c:255 218 214;--warn:246 190 72;--warn-c:97 64 0;--on-warn-c:255 222 166;--ok:140 216 156;--ok-c:0 83 38;--on-ok-c:168 245 183}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--pri:128 216 194;--on-pri:0 56 46;--pri-c:0 81 67;--on-pri-c:189 238 221;--sur:14 21 18;--sur-c:26 33 30;--sur-h:38 46 42;--on-sur:222 228 223;--on-var:190 201 194;--out:137 147 141;--out-v:63 73 68;--ter-c:82 55 96;--on-ter-c:240 219 255;--ter:217 188 232;--bad:255 180 171;--bad-c:147 0 10;--on-bad-c:255 218 214;--warn:246 190 72;--warn-c:97 64 0;--on-warn-c:255 222 166;--ok:140 216 156;--ok-c:0 83 38;--on-ok-c:168 245 183}
 }
+:root[data-theme=dark]{--pri:128 216 194;--on-pri:0 56 46;--pri-c:0 81 67;--on-pri-c:189 238 221;--sur:14 21 18;--sur-c:26 33 30;--sur-h:38 46 42;--on-sur:222 228 223;--on-var:190 201 194;--out:137 147 141;--out-v:63 73 68;--ter-c:82 55 96;--on-ter-c:240 219 255;--ter:217 188 232;--bad:255 180 171;--bad-c:147 0 10;--on-bad-c:255 218 214;--warn:246 190 72;--warn-c:97 64 0;--on-warn-c:255 222 166;--ok:140 216 156;--ok-c:0 83 38;--on-ok-c:168 245 183}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
 html[data-camo="1"]{--pri:71 85 105;--on-pri:255 255 255;--pri-c:226 232 240;--on-pri-c:15 23 42;--sur:248 250 252;--sur-c:241 245 249;--sur-h:226 232 240;--on-sur:15 23 42;--on-var:71 85 105;--out:100 116 139;--out-v:203 213 225;--ter-c:226 232 240;--on-ter-c:15 23 42;--ter:71 85 105;--bad:127 79 79;--bad-c:233 237 242;--on-bad-c:30 41 59;--warn:124 107 70;--warn-c:233 237 242;--on-warn-c:30 41 59;--ok:76 110 90;--ok-c:233 237 242;--on-ok-c:30 41 59}
-@media (prefers-color-scheme:dark){html[data-camo="1"]{--pri:148 163 184;--on-pri:15 23 42;--pri-c:51 65 85;--on-pri-c:226 232 240;--sur:15 23 42;--sur-c:30 41 59;--sur-h:51 65 85;--on-sur:226 232 240;--on-var:148 163 184;--out:100 116 139;--out-v:51 65 85;--ter-c:51 65 85;--on-ter-c:226 232 240;--ter:148 163 184;--bad:201 160 160;--bad-c:39 51 71;--on-bad-c:226 232 240;--warn:196 182 148;--warn-c:39 51 71;--on-warn-c:226 232 240;--ok:156 188 168;--ok-c:39 51 71;--on-ok-c:226 232 240}
+@media (prefers-color-scheme:dark){html[data-camo="1"]:not([data-theme=light]){--pri:148 163 184;--on-pri:15 23 42;--pri-c:51 65 85;--on-pri-c:226 232 240;--sur:15 23 42;--sur-c:30 41 59;--sur-h:51 65 85;--on-sur:226 232 240;--on-var:148 163 184;--out:100 116 139;--out-v:51 65 85;--ter-c:51 65 85;--on-ter-c:226 232 240;--ter:148 163 184;--bad:201 160 160;--bad-c:39 51 71;--on-bad-c:226 232 240;--warn:196 182 148;--warn-c:39 51 71;--on-warn-c:226 232 240;--ok:156 188 168;--ok-c:39 51 71;--on-ok-c:226 232 240}
 }
+html[data-camo="1"][data-theme=dark]{--pri:148 163 184;--on-pri:15 23 42;--pri-c:51 65 85;--on-pri-c:226 232 240;--sur:15 23 42;--sur-c:30 41 59;--sur-h:51 65 85;--on-sur:226 232 240;--on-var:148 163 184;--out:100 116 139;--out-v:51 65 85;--ter-c:51 65 85;--on-ter-c:226 232 240;--ter:148 163 184;--bad:201 160 160;--bad-c:39 51 71;--on-bad-c:226 232 240;--warn:196 182 148;--warn-c:39 51 71;--on-warn-c:226 232 240;--ok:156 188 168;--ok-c:39 51 71;--on-ok-c:226 232 240}
 *,:after,:before{box-sizing:border-box;border:0 solid rgb(var(--out-v))}
 html{line-height:1.5;-webkit-text-size-adjust:100%;scroll-padding-top:5rem;font-family:Roboto Flex,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 body{margin:0;background:rgb(var(--sur));color:rgb(var(--on-sur));-webkit-tap-highlight-color:transparent}
@@ -150,6 +155,15 @@ body>:not(#print){display:none!important}
 #print .p-text{white-space:pre-wrap;font-size:9pt}
 #print .p-foot{margin-top:16pt;padding-top:5pt;border-top:1px solid #888;font-size:8pt;color:#444}
 }
+.iconbtn[aria-current=page]{background:rgb(var(--pri-c));color:rgb(var(--on-pri-c))}
+.switch{position:relative;flex:none;width:3.25rem;height:2rem;border-radius:999px;background:rgb(var(--sur-h));border:2px solid rgb(var(--out));transition:background .2s,border-color .2s}
+.switch>span{position:absolute;top:50%;left:6px;width:16px;height:16px;border-radius:999px;background:rgb(var(--out));transform:translateY(-50%);transition:left .2s,width .2s,height .2s,background .2s}
+.switch[aria-checked=true]{background:rgb(var(--pri));border-color:rgb(var(--pri))}
+.switch[aria-checked=true]>span{left:22px;width:24px;height:24px;background:rgb(var(--on-pri))}
+.qa{background:rgb(var(--sur-c));border-radius:22px}
+.qa>summary{display:flex;align-items:center;gap:.75rem;min-height:3.5rem;padding:.75rem 1rem;cursor:pointer;font-weight:600}
+.qa>div{padding:0 1rem 1rem;font-size:.9rem}
+.qa>div p+p{margin-top:.5rem}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
 .visible{visibility:visible}
 .col-span-2{grid-column:span 2/span 2}
@@ -252,6 +266,11 @@ body>:not(#print){display:none!important}
 <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
 <symbol id="i-trash-2" viewBox="0 0 24 24"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
 <symbol id="i-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol>
+<symbol id="i-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2"/><path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"/><path d="M16 12a4 4 0 0 0-4-4"/><path d="m19 5-1.256 1.256"/><path d="M20 12h2"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
 <symbol id="i-stamp" viewBox="0 0 100 100"><path d="M44.8 5.7Q50 0 55.2 5.7Q60.4 11.4 67.7 9Q75 6.7 76.6 14.2Q78.3 21.7 85.8 23.4Q93.3 25 91 32.3Q88.6 39.6 94.3 44.8Q100 50 94.3 55.2Q88.6 60.4 91 67.7Q93.3 75 85.8 76.6Q78.3 78.3 76.6 85.8Q75 93.3 67.7 91Q60.4 88.6 55.2 94.3Q50 100 44.8 94.3Q39.6 88.6 32.3 91Q25 93.3 23.4 85.8Q21.7 78.3 14.2 76.6Q6.7 75 9 67.7Q11.4 60.4 5.7 55.2Q0 50 5.7 44.8Q11.4 39.6 9 32.3Q6.7 25 14.2 23.4Q21.7 21.7 23.4 14.2Q25 6.7 32.3 9Q39.6 11.4 44.8 5.7Z"/></symbol>
 </svg>
 <header class="top">
@@ -264,6 +283,7 @@ body>:not(#print){display:none!important}
     <button id="camo" type="button" class="btn btn-out h-11 min-h-0 px-4 text-sm" aria-pressed="false" title="Switch between clinical wording and a neutral look for public places">
       <svg id="camoIcon" class="ic h-5 w-5" aria-hidden="true"><use href="#i-eye"/></svg>Discreet
     </button>
+    <button type="button" class="iconbtn" data-tab="settings" aria-label="Settings, help and FAQ" title="Settings, help and FAQ"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg></button>
   </div>
 </header>
 
@@ -359,6 +379,12 @@ body>:not(#print){display:none!important}
       <button id="clearDone" type="button" class="btn btn-out">Clear ticked</button>
       <button id="clearList" type="button" class="btn btn-out">Clear list</button>
     </div>
+  </section>
+
+  <!-- Settings, help and FAQ (opened from the gear in the header) -->
+  <section id="v-settings" class="space-y-4" hidden>
+    <div id="setTop" class="space-y-4"></div>
+    <div id="setHelp" class="space-y-4"></div>
   </section>
 
   <!-- Support: donation link and fundraiser (settings in SUPPORT below) -->
@@ -564,6 +590,7 @@ const state = {
   camo: store.get('camo', false) === true,
   history: Array.isArray(store.get('history', [])) ? store.get('history', []) : [],
   list: Array.isArray(store.get('list', [])) ? store.get('list', []).filter(x => x && x.id && x.t) : [],
+  theme: ['light', 'dark', 'system'].includes(store.get('theme', 'system')) ? store.get('theme', 'system') : 'system',
   tab: 'scan', scan: null, filter: 0, q: ''
 };
 if (!state.profiles.some(p => p.id === state.active)) state.active = state.profiles[0].id;
@@ -582,7 +609,8 @@ const COPY = {
   evH: ['What the evidence says, and its limits', 'About this guide'],
   navImpact: ['Support', 'Community'],
   staples: ['Add CDED staples', 'Add plan staples'],
-  disc: ['For educational and dietary lifestyle reference under CDED protocols. Not intended to diagnose, treat, or replace consultation with a gastroenterologist or IBD specialized dietitian.', 'For educational and dietary lifestyle reference. Not intended to diagnose, treat, or replace advice from your doctor or dietitian.']
+  disc: ['For educational and informational purposes only. Not medical advice. Do not change your diet or health regimen without first consulting a licensed, trusted medical professional.',
+    'For educational and informational purposes only. Not medical advice. Do not change your diet or health regimen without first consulting a licensed, trusted medical professional.'],
 };
 const t = k => COPY[k][state.camo ? 1 : 0];
 let toastTimer = 0;
@@ -951,9 +979,80 @@ function renderSupport() {
     <p class="text-sm text-mut">${live ? `${status} Payments are handled by ${processor}. This app never sees your card details.` : 'The donation link is not set up yet.'}${S.contact ? ` Questions: <a href="mailto:${esc(S.contact)}">${esc(S.contact)}</a>.` : ''}</p>
     <p class="text-sm text-mut">Scanning and every safety check stay free for everyone. Gifts fund the retreat and keep the family view, shopping list and PDF exports free too.</p>`;
 }
+/* ----- Settings, help and FAQ ----- */
+const APP_VERSION = '1.3.0';
+const DISCLAIMER_FULL = 'This app is for educational and informational purposes only. It is not medical advice and does not diagnose, treat or prevent any condition. Do not change your diet or health regimen without first consulting a licensed, trusted medical professional, such as your doctor, gastroenterologist or a registered dietitian.';
+function applyTheme() {
+  if (state.theme === 'system') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', state.theme);
+}
+function renderSettings() {
+  const c = state.camo, n = state.profiles.length;
+  const themes = [['light', 'Light', 'sun'], ['dark', 'Dark', 'moon'], ['system', 'System', 'sun-moon']];
+  $('#setTop').innerHTML = `
+    <h1 class="hl text-3xl">Settings</h1>
+    <div class="card space-y-3">
+      <h2 class="font-semibold">Appearance</h2>
+      <div class="seg" role="group" aria-label="Theme">${themes.map(([k, label, icon]) =>
+        `<button type="button" data-theme-set="${k}" aria-pressed="${state.theme === k}"><span class="flex items-center justify-center gap-2">${ic(icon, 'h-5 w-5')}${label}</span></button>`).join('')}</div>
+      <p class="text-xs text-mut">System matches your phone's light or dark setting.</p>
+    </div>
+    <div class="card space-y-4">
+      <h2 class="font-semibold">Privacy and family</h2>
+      <div class="flex items-center gap-3"><div class="min-w-0 flex-1"><p class="font-medium">Discreet mode</p>
+        <p class="text-sm text-mut">Neutral name, wording and colours for scanning in public.</p></div>
+        <button type="button" class="switch" role="switch" aria-checked="${c}" aria-label="Discreet mode" data-camo-toggle><span></span></button></div>
+      <div class="flex items-center gap-3"><div class="min-w-0 flex-1"><p class="font-medium">Family</p>
+        <p class="text-sm text-mut">${plural(n, 'person').replace('persons', 'people')}, each with their own phase.</p></div>
+        <button type="button" class="btn btn-tonal h-10 min-h-0 px-4 text-sm" data-family>Edit</button></div>
+    </div>
+    <div class="card space-y-3">
+      <h2 class="font-semibold">Your data</h2>
+      <p class="text-sm text-mut">Scans, your shopping list, family names and settings are saved only on this device. There is no account. A barcode lookup sends just the barcode number to Open Food Facts, and label photos are read on your phone.</p>
+      <button id="wipe" type="button" class="btn btn-out w-full">${ic('trash-2')}Delete all data on this device</button>
+    </div>`;
+}
+const qa = (q, a) => `<details class="qa"><summary><span class="flex-1">${q}</span>${ic('chevron-down', 'chev h-5 w-5 text-mut')}</summary><div>${a}</div></details>`;
+function renderHelp() {
+  const c = state.camo, plan = c ? 'your plan' : 'CDED', name = t('doc');
+  const help = [
+    ['Check a product', '<p>Tap <b>Scan barcode</b> and hold the barcode inside the frame. If the product is not found or has no ingredient list, tap <b>Read label</b> and photograph the ingredients, or tap <b>Choose a photo</b>.</p><p>You can also type a barcode or paste an ingredient list under <b>Type a barcode or ingredients</b>.</p>'],
+    ['Read the result', `<p><b>Red</b> means it contains an ingredient to avoid at every stage. <b>Amber</b> means it is not for the current phase. <b>Green</b> means none of the 65 listed additives were found. <b>Grey</b> means there was not enough information to check.</p><p>Open any flagged ingredient to see why it is listed. Open <b>Text that was checked</b> to fix misread words, then tap <b>Check this text again</b>.</p>`],
+    ['Choose your phase', '<p>Tap Phase 1, 2 or 3. Results update straight away and the phase is remembered.</p>'],
+    ['Check for your family', '<p>Tap <b>Add family</b> and give each person a name and phase. Every result then shows a line for each person. Tap a name to switch whose phase the main result uses.</p>'],
+    ['Make a shopping list', `<p>On a result, tap <b>Add to list</b>. In the List tab you can type items, add the ${c ? 'plan' : 'CDED'} staples for the current phase, tick items off and print the list.</p>`],
+    ['Save as PDF or print', '<p>Tap <b>Save as PDF</b> on a result or in History, <b>Print or save as PDF</b> in the List tab, or <b>Print avoid list</b> in the Library.</p><p>On Android, choose <b>Save as PDF</b> as the printer. On iPhone, tap the share button in the print screen, then <b>Save to Files</b>.</p>'],
+    ['Use Discreet mode', '<p>Tap <b>Discreet</b> at the top, or use the switch above. The app becomes PurePlate, with neutral wording and softer warning colours. PDFs follow the same style.</p>'],
+    ['Install on your home screen', '<p><b>iPhone:</b> open the app in Safari, tap Share, then <b>Add to Home Screen</b>.</p><p><b>Android:</b> open it in Chrome, tap the menu, then <b>Install app</b> or <b>Add to Home screen</b>. It installs as PurePlate.</p>'],
+    ['Use it offline', '<p>After your first visit the app opens without a connection. Label reading works offline once you have used it online at least once. Barcode lookups always need a connection.</p>']
+  ];
+  const faq = [
+    ['Is this medical advice?', `<p><b>No.</b> ${DISCLAIMER_FULL}</p>`],
+    ['Does a green result mean a food is safe for me?', `<p>No. It only means none of the 65 listed additives were found in the ingredient information. ${c ? 'Your plan' : 'CDED'} also limits whole food groups such as dairy, wheat and processed meat, and labels and databases can be wrong or out of date. Ask your medical professional what is right for you.</p>`],
+    ['Which additives does it look for?', '<p>12 to avoid at every stage, including carrageenan, carboxymethylcellulose, polysorbate 80, maltodextrin and titanium dioxide, and 53 to avoid in Phases 1 and 2, such as gums, lecithins, emulsifiers and sweeteners. The Library lists all of them and why each is included.</p>'],
+    ['Why do some results change with the phase?', '<p>The 53 caution additives are excluded in Phases 1 and 2 and marked Occasional in maintenance, so the same product can be amber in Phase 1 and green in Phase 3. Agree any reintroduction with your dietitian.</p>'],
+    ['Where does the evidence come from?', c
+      ? '<p>Each Library entry states its basis: a clinical trial, a published diet plan, lab studies or chemical similarity. Some of the evidence is early or mixed.</p>'
+      : "<p>The ADDapt trial at King's College London tested three additives: carrageenan, carboxymethylcellulose and polysorbate 80. When this guide was written its results were available only as conference abstracts. Other entries come from the CDED avoid list, lab studies or chemical similarity, and one Australian feeding trial found no effect. See <b>What the evidence says</b> in the Library.</p>"],
+    ['Where does product information come from?', '<p>Open Food Facts, a free database that anyone can edit. It can be incomplete or out of date, so compare it with the pack.</p>'],
+    ['Why does it say Not enough to check?', '<p>The product is not in Open Food Facts, has no ingredient list there, the lookup could not connect, or the photo could not be read. Photograph the ingredient list or type it in.</p>'],
+    ['How accurate is label reading?', '<p>Glare, curved packs and small print cause mistakes. Words that nearly match are marked <b>Possible match</b>. Check <b>Text that was checked</b>, correct it, and check again.</p>'],
+    ['Is my information private?', '<p>Yes. Everything is saved only on this device and there is no account. A barcode lookup sends only the barcode number to Open Food Facts. Label photos are read on your phone and are not uploaded.</p>'],
+    ['Is it free?', `<p>Yes. Scanning and every feature are free. Donations in the ${c ? 'Community' : 'Support'} tab fund the retreat and help keep it free.</p>`],
+    ['How do I get updates?', '<p>Open the app while you are online. A new version loads the next time you open it.</p>'],
+    ['How do I delete my data?', '<p>Use <b>Delete all data on this device</b> above. Clearing your browser\'s data for this site also removes it.</p>']
+  ];
+  $('#setHelp').innerHTML = `
+    <h2 class="hl pt-2 text-2xl">Help</h2><div class="space-y-2">${help.map(x => qa(x[0], x[1])).join('')}</div>
+    <h2 class="hl pt-2 text-2xl">FAQ</h2><div class="space-y-2">${faq.map(x => qa(x[0], x[1])).join('')}</div>
+    <div class="card space-y-2 text-sm"><h2 class="flex items-center gap-2 text-base font-semibold">${ic('info', 'h-5 w-5')}About</h2>
+      <p class="font-medium">${esc(name)}, version ${APP_VERSION}</p>
+      <p>${DISCLAIMER_FULL}</p>
+      <p class="text-mut">Product data from <a href="https://world.openfoodfacts.org" target="_blank" rel="noopener">Open Food Facts</a> contributors under the Open Database License. Built with Tesseract.js, zxing-wasm, Lucide icons and Roboto Flex.</p></div>`;
+}
 function renderAll() {
   document.querySelectorAll('[data-seg]').forEach(el => { el.innerHTML = segHTML(); });
-  renderWho(); renderResult(); renderGuide(); renderHistory(); renderList(); renderSupport();
+  renderWho(); renderResult(); renderGuide(); renderHistory(); renderList(); renderSupport(); renderSettings();
 }
 // Camouflage mode swaps clinical wording and warning colours for a neutral identity
 function applyMode() {
@@ -963,11 +1062,11 @@ function applyMode() {
   $('#camo').setAttribute('aria-pressed', String(state.camo));
   $('#camoIcon').innerHTML = `<use href="#i-${state.camo ? 'eye-off' : 'eye'}"/>`;
   const tc = $('meta[name="theme-color"]'); if (tc) tc.content = state.camo ? '#475569' : '#0E6B58';
-  renderAll();
+  renderAll(); renderHelp();
 }
 function setTab(tab) {
   state.tab = tab;
-  ['scan', 'guide', 'history', 'list', 'impact'].forEach(n => { $('#v-' + n).hidden = n !== tab; });
+  ['scan', 'guide', 'history', 'list', 'impact', 'settings'].forEach(n => { $('#v-' + n).hidden = n !== tab; });
   document.querySelectorAll('[data-tab]').forEach(b => {
     if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   });
@@ -1153,7 +1252,7 @@ async function lookupBarcode(raw) {
 
 /* ===== 9. Events and start-up ===== */
 document.addEventListener('click', ev => {
-  const el = ev.target.closest('[data-phase],[data-tab],[data-filter],[data-open],[data-person],[data-family],[data-premove],[data-del],#camo,#btnCam,#btnSnap,#reCheck,#again,#clearHist,#printHist,#printAvoid,#printScan,#addList,#staples,#printList,#clearDone,#clearList,#addPerson,#famDone');
+  const el = ev.target.closest('[data-phase],[data-tab],[data-filter],[data-open],[data-person],[data-family],[data-premove],[data-del],[data-theme-set],[data-camo-toggle],#wipe,#camo,#btnCam,#btnSnap,#reCheck,#again,#clearHist,#printHist,#printAvoid,#printScan,#addList,#staples,#printList,#clearDone,#clearList,#addPerson,#famDone');
   if (!el || el.disabled) return;
   if (el.dataset.phase) { state.phase = okPhase(+el.dataset.phase); me().phase = state.phase; saveProfiles(); renderAll(); }
   else if (el.dataset.person) { if (profileOf(el.dataset.person)) { state.active = el.dataset.person; state.phase = me().phase; saveProfiles(); renderAll(); } }
@@ -1175,7 +1274,15 @@ document.addEventListener('click', ev => {
   else if (el.dataset.tab) setTab(el.dataset.tab);
   else if (el.dataset.filter) { state.filter = +el.dataset.filter; renderGuide(); }
   else if (el.dataset.open) { state.scan = state.history[+el.dataset.open]; setTab('scan'); renderResult(); const b = $('#result'); if (b.scrollIntoView) b.scrollIntoView({ block: 'start' }); }
-  else if (el.id === 'camo') { state.camo = !state.camo; store.set('camo', state.camo); applyMode(); }
+  else if (el.id === 'camo' || el.dataset.camoToggle !== undefined) { state.camo = !state.camo; store.set('camo', state.camo); applyMode(); }
+  else if (el.dataset.themeSet) { state.theme = el.dataset.themeSet; store.set('theme', state.theme); applyTheme(); renderSettings(); }
+  else if (el.id === 'wipe') {
+    if (!window.confirm('Delete your history, shopping list, family and settings from this device? This cannot be undone.')) return;
+    try { Object.keys(localStorage).filter(k => k.indexOf('pg.') === 0).forEach(k => localStorage.removeItem(k)); } catch (e) { /* storage blocked */ }
+    state.profiles = loadProfiles(); state.active = state.profiles[0].id; state.phase = me().phase;
+    state.history = []; state.list = []; state.scan = null; state.camo = false; state.theme = 'system';
+    applyTheme(); applyMode(); toast('All app data on this device was deleted.');
+  }
   else if (el.id === 'btnCam') { if (stream) stopCamera(); else startCamera(); }
   else if (el.id === 'btnSnap') {
     // Camera running: read the current frame. Otherwise open the phone camera through a file input.
@@ -1243,6 +1350,7 @@ if ('serviceWorker' in navigator) {
 }
 
 window.PureGut = { DB, ADDITIVES, analyse, verdictOf, SUPPORT };   // handy for checking the dataset in the console
+applyTheme();
 applyMode();
 setTab('scan');
 })();
