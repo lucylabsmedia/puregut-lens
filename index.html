@@ -164,6 +164,16 @@ body>:not(#print){display:none!important}
 .qa>summary{display:flex;align-items:center;gap:.75rem;min-height:3.5rem;padding:.75rem 1rem;cursor:pointer;font-weight:600}
 .qa>div{padding:0 1rem 1rem;font-size:.9rem}
 .qa>div p+p{margin-top:.5rem}
+.th-up{color:rgb(var(--ok))}
+.th-down{color:rgb(var(--bad))}
+.thumb{border:1.5px solid rgb(var(--out-v));color:rgb(var(--on-sur))}
+.thumb[data-rate=up]{--t:var(--ok);--t-c:var(--ok-c);--on-t-c:var(--on-ok-c)}
+.thumb[data-rate=down]{--t:var(--bad);--t-c:var(--bad-c);--on-t-c:var(--on-bad-c)}
+.thumb .ic{color:rgb(var(--t))}
+.thumb[aria-pressed=true]{background:rgb(var(--t-c));color:rgb(var(--on-t-c));border:2px solid rgb(var(--t))}
+.thumb[aria-pressed=true] .ic{fill:rgb(var(--t))}
+.rmini{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;border-radius:999px;background:rgb(var(--s-c));color:rgb(var(--on-s-c));font-weight:600}
+.rmini .ic{color:inherit}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
 .visible{visibility:visible}
 .col-span-2{grid-column:span 2/span 2}
@@ -201,6 +211,7 @@ body>:not(#print){display:none!important}
 .flex-wrap{flex-wrap:wrap}
 .items-center{align-items:center}
 .justify-center{justify-content:center}
+.gap-1\.5{gap:.375rem}
 .gap-2{gap:.5rem}
 .gap-3{gap:.75rem}
 .space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}
@@ -271,6 +282,8 @@ body>:not(#print){display:none!important}
 <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol>
 <symbol id="i-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2"/><path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"/><path d="M16 12a4 4 0 0 0-4-4"/><path d="m19 5-1.256 1.256"/><path d="M20 12h2"/></symbol>
 <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+<symbol id="i-thumbs-up" viewBox="0 0 24 24"><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/><path d="M7 10v12"/></symbol>
+<symbol id="i-thumbs-down" viewBox="0 0 24 24"><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/><path d="M17 14V2"/></symbol>
 <symbol id="i-stamp" viewBox="0 0 100 100"><path d="M44.8 5.7Q50 0 55.2 5.7Q60.4 11.4 67.7 9Q75 6.7 76.6 14.2Q78.3 21.7 85.8 23.4Q93.3 25 91 32.3Q88.6 39.6 94.3 44.8Q100 50 94.3 55.2Q88.6 60.4 91 67.7Q93.3 75 85.8 76.6Q78.3 78.3 76.6 85.8Q75 93.3 67.7 91Q60.4 88.6 55.2 94.3Q50 100 44.8 94.3Q39.6 88.6 32.3 91Q25 93.3 23.4 85.8Q21.7 78.3 14.2 76.6Q6.7 75 9 67.7Q11.4 60.4 5.7 55.2Q0 50 5.7 44.8Q11.4 39.6 9 32.3Q6.7 25 14.2 23.4Q21.7 21.7 23.4 14.2Q25 6.7 32.3 9Q39.6 11.4 44.8 5.7Z"/></symbol>
 </svg>
 <header class="top">
@@ -361,6 +374,7 @@ body>:not(#print){display:none!important}
       <button id="printHist" type="button" class="btn btn-tonal"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg>Save as PDF</button>
       <button id="clearHist" type="button" class="btn btn-out">Clear history</button>
     </div>
+    <div id="hFilter" class="flex flex-wrap gap-2" role="group" aria-label="Filter history"></div>
     <div id="hList" class="space-y-2"></div>
   </section>
 
@@ -591,6 +605,8 @@ const state = {
   history: Array.isArray(store.get('history', [])) ? store.get('history', []) : [],
   list: Array.isArray(store.get('list', [])) ? store.get('list', []).filter(x => x && x.id && x.t) : [],
   theme: ['light', 'dark', 'system'].includes(store.get('theme', 'system')) ? store.get('theme', 'system') : 'system',
+  ratings: (r => (r && typeof r === 'object' && !Array.isArray(r) ? r : {}))(store.get('ratings', {})),
+  hf: 0,
   tab: 'scan', scan: null, filter: 0, q: ''
 };
 if (!state.profiles.some(p => p.id === state.active)) state.active = state.profiles[0].id;
@@ -778,6 +794,7 @@ function renderResult() {
     </div>
     <div><p class="text-lg font-semibold leading-tight">${esc(s.title)}</p>
       ${s.code ? `<p class="text-sm text-mut">Open Food Facts, barcode ${esc(s.code)}</p>` : ''}</div>
+    ${rateHTML(s)}
     ${state.profiles.length > 1 ? `<p class="-mb-2 text-xs text-mut">Phase for ${esc(me().name)}</p>` : ''}
     <div class="seg" data-seg>${segHTML()}</div>
     ${familyHTML(s)}
@@ -807,16 +824,62 @@ function renderGuide() {
   $('#gList').innerHTML = list.map(e => cardHTML(e, null)).join('');
 }
 function renderHistory() {
-  const h = state.history;
+  const h = state.history, want = [null, 'up', 'down'][state.hf];
   $('#hTools').hidden = !h.length;
-  $('#hList').innerHTML = h.length ? h.map((s, i) => {
-    const v = verdictOf(s, state.phase), d = new Date(s.t);
+  const rated = h.some(s => ratingOf(s, state.active));
+  $('#hFilter').hidden = !rated;
+  $('#hFilter').innerHTML = [['All', ''], ['Agreed', 'up'], ['Did not agree', 'down']].map(([label, v], i) =>
+    `<button type="button" class="chip" data-hfilter="${i}" aria-pressed="${state.hf === i}">${v ? thumb(v) : ''}${label}</button>`).join('');
+  const rows = h.map((s, i) => [s, i]).filter(([s]) => !want || (ratingOf(s, state.active) || {}).v === want);
+  if (h.length && !rows.length) { $('#hList').innerHTML = `<p class="card text-sm text-mut">Nothing marked "${want === 'up' ? 'Agreed' : 'Did not agree'}" for ${esc(me().name)} yet.</p>`; return; }
+  $('#hList').innerHTML = h.length ? rows.map(([s, i]) => {
+    const v = verdictOf(s, state.phase), d = new Date(s.t), r = ratingOf(s, state.active);
     return `<button type="button" class="add flex w-full items-center gap-3 px-4 py-3 text-left" data-open="${i}" data-s="${{ red: 'bad', amber: 'warn', green: 'ok', unknown: 'na' }[v]}">
-      <span class="dot"></span><span class="min-w-0 flex-1"><span class="block truncate font-semibold">${esc(s.title)}</span>
+      <span class="dot"></span><span class="min-w-0 flex-1"><span class="flex items-center gap-1.5"><span class="truncate font-semibold">${esc(s.title)}</span>${r ? `<span class="flex-none" title="${diaryWord(r)}">${thumb(r.v)}</span>` : ''}</span>
       <span class="block text-xs text-mut">${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span></span>
       <span class="pill">${{ red: 'Avoid', amber: 'Not in Phase ' + state.phase, green: 'Clear', unknown: 'Unread' }[v]}</span></button>`;
   }).join('') : '<p class="card text-sm text-mut">No scans yet. Products you check are saved here, on this device only.</p>';
 }
+/* ----- Food diary: "Did it agree with you?" per person, saved on this device -----
+   Barcode products are remembered by barcode, so the answer shows again on the next scan.
+   Typed or photographed lists are remembered by the time of that check. */
+const rKey = s => (s.code ? 'c:' + s.code : s.t ? 't:' + s.t : '');
+const ratingOf = (s, pid) => { const r = state.ratings[rKey(s)]; return r && r[pid] && (r[pid].v === 'up' || r[pid].v === 'down') ? r[pid] : null; };
+function saveRatings() {
+  const keys = Object.keys(state.ratings);
+  if (keys.length > 500) {
+    const newest = k => Math.max(0, ...Object.values(state.ratings[k]).map(x => x.t || 0));
+    keys.sort((a, b) => newest(a) - newest(b)).slice(0, keys.length - 500).forEach(k => delete state.ratings[k]);
+  }
+  store.set('ratings', state.ratings);
+}
+function setRating(s, v) {
+  const k = rKey(s); if (!k) return;
+  const r = state.ratings[k] || (state.ratings[k] = {}), pid = state.active;
+  if (r[pid] && r[pid].v === v) delete r[pid]; else r[pid] = { v, t: Date.now() };
+  if (!Object.keys(r).length) delete state.ratings[k];
+  saveRatings();
+}
+const thumb = (v, cls = 'h-4 w-4') => ic(v === 'up' ? 'thumbs-up' : 'thumbs-down', cls + ' ' + (v === 'up' ? 'th-up' : 'th-down'));
+function rateHTML(s) {
+  const r = ratingOf(s, state.active), many = state.profiles.length > 1;
+  const others = many ? state.profiles.filter(p => p.id !== state.active).map(p => {
+    const o = ratingOf(s, p.id);
+    return o ? `<span class="rmini" data-s="${o.v === 'up' ? 'ok' : 'bad'}">${thumb(o.v)}${esc(p.name)}</span>` : '';
+  }).join('') : '';
+  const when = r ? new Date(r.t).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+  return `<div class="card">
+    <p class="font-semibold">Did it agree with ${many ? esc(me().name) : 'you'}?</p>
+    <div class="mt-3 grid grid-cols-2 gap-2">
+      <button type="button" class="btn thumb" data-rate="up" aria-pressed="${!!r && r.v === 'up'}" aria-label="Yes, it agreed with ${many ? esc(me().name) : 'me'}">${ic('thumbs-up')}Yes</button>
+      <button type="button" class="btn thumb" data-rate="down" aria-pressed="${!!r && r.v === 'down'}" aria-label="No, it did not agree with ${many ? esc(me().name) : 'me'}">${ic('thumbs-down')}No</button>
+    </div>
+    <p class="mt-2 text-xs text-mut">${r ? `Saved ${esc(when)}. Tap it again to clear.` : `Your answer is saved on this device${s.code ? ' and shows next time you scan this product' : ''}.`} It does not change the result above.</p>
+    ${others ? `<p class="mt-3 flex flex-wrap gap-2 text-xs">${others}</p>` : ''}
+  </div>`;
+}
+const diaryWord = r => (r ? (r.v === 'up' ? 'Agreed' : 'Did not agree') : '');
+
 /* ----- Family view (profiles stay on this device) ----- */
 const S_OF = { red: 'bad', amber: 'warn', green: 'ok', unknown: 'na' };
 const shortV = (v, p) => (v === 'amber' ? 'Not in Phase ' + p : { red: 'Avoid', green: 'Clear', unknown: 'Not checked' }[v]);
@@ -866,9 +929,17 @@ function itemStatus(it, phase) {
   return [S_OF[v], shortV(v, phase)];
 }
 function familyNote(it) {
-  if (state.profiles.length < 2) return '';
-  const no = state.profiles.filter(p => ['warn', 'bad'].includes(itemStatus(it, p.phase)[0]));
-  return no.length ? 'Not for ' + no.map(p => p.name).join(', ') : '';
+  const notes = [], many = state.profiles.length > 1;
+  if (many) {
+    const no = state.profiles.filter(p => ['warn', 'bad'].includes(itemStatus(it, p.phase)[0]));
+    if (no.length) notes.push('Not for ' + no.map(p => p.name).join(', '));
+  }
+  const r = state.ratings[it.c ? 'c:' + it.c : it.s ? 't:' + it.s : ''];
+  if (r) {
+    const downs = state.profiles.filter(p => r[p.id] && r[p.id].v === 'down');
+    if (downs.length) notes.push(many ? 'Did not agree with ' + downs.map(p => p.name).join(', ') : 'Did not agree with you');
+  }
+  return notes.join('. ');
 }
 function addToList(item) {
   const key = String(item.c || item.t).toLowerCase();
@@ -912,8 +983,8 @@ function printDoc(title, body) {
   try { window.print(); setTimeout(restore, 3000); } catch (e) { restore(); toast('Printing is not available here. Open the app in your browser instead.'); }
 }
 function famTable(s) {
-  return `<table><thead><tr><th>Person</th><th>Phase</th><th>Result</th></tr></thead><tbody>${state.profiles.map(p =>
-    `<tr><td>${esc(p.name)}</td><td>${p.phase}</td><td>${vWord(verdictOf(s, p.phase), p.phase)}</td></tr>`).join('')}</tbody></table>`;
+  return `<table><thead><tr><th>Person</th><th>Phase</th><th>Result</th><th>Did it agree?</th></tr></thead><tbody>${state.profiles.map(p =>
+    `<tr><td>${esc(p.name)}</td><td>${p.phase}</td><td>${vWord(verdictOf(s, p.phase), p.phase)}</td><td>${diaryWord(ratingOf(s, p.id)) || 'Not answered'}</td></tr>`).join('')}</tbody></table>`;
 }
 function printScan(s) {
   const flagged = s.hits.filter(h => DB[h.id] && DB[h.id].riskTier < 3).map(h => DB[h.id]);
@@ -931,7 +1002,7 @@ function printScan(s) {
 function printHistory() {
   const P = state.profiles;
   printDoc('Scan history', `<table><thead><tr><th>Checked</th><th>Product</th>${P.map(p => `<th>${esc(p.name)}, Phase ${p.phase}</th>`).join('')}</tr></thead><tbody>${state.history.map(s =>
-    `<tr><td>${esc(pDate(s.t))}</td><td>${esc(s.title)}${s.code ? '<br><span class="p-small">' + esc(s.code) + '</span>' : ''}</td>${P.map(p => `<td>${shortV(verdictOf(s, p.phase), p.phase)}</td>`).join('')}</tr>`).join('')}</tbody></table>`);
+    `<tr><td>${esc(pDate(s.t))}</td><td>${esc(s.title)}${s.code ? '<br><span class="p-small">' + esc(s.code) + '</span>' : ''}</td>${P.map(p => { const r = ratingOf(s, p.id); return `<td>${shortV(verdictOf(s, p.phase), p.phase)}${r ? '<br><span class="p-small">' + diaryWord(r) + '</span>' : ''}</td>`; }).join('')}</tr>`).join('')}</tbody></table>`);
 }
 function printList() {
   const groups = [['staple', state.camo ? 'Whole foods' : 'CDED staples'], ['product', 'Checked products'], ['item', 'Other items']];
@@ -980,7 +1051,7 @@ function renderSupport() {
     <p class="text-sm text-mut">Scanning and every safety check stay free for everyone. Gifts fund the retreat and keep the family view, shopping list and PDF exports free too.</p>`;
 }
 /* ----- Settings, help and FAQ ----- */
-const APP_VERSION = '1.3.0';
+const APP_VERSION = '1.4.0';
 const DISCLAIMER_FULL = 'This app is for educational and informational purposes only. It is not medical advice and does not diagnose, treat or prevent any condition. Do not change your diet or health regimen without first consulting a licensed, trusted medical professional, such as your doctor, gastroenterologist or a registered dietitian.';
 function applyTheme() {
   if (state.theme === 'system') document.documentElement.removeAttribute('data-theme');
@@ -1008,7 +1079,7 @@ function renderSettings() {
     </div>
     <div class="card space-y-3">
       <h2 class="font-semibold">Your data</h2>
-      <p class="text-sm text-mut">Scans, your shopping list, family names and settings are saved only on this device. There is no account. A barcode lookup sends just the barcode number to Open Food Facts, and label photos are read on your phone.</p>
+      <p class="text-sm text-mut">Scans, food diary answers, your shopping list, family names and settings are saved only on this device. There is no account. A barcode lookup sends just the barcode number to Open Food Facts, and label photos are read on your phone.</p>
       <button id="wipe" type="button" class="btn btn-out w-full">${ic('trash-2')}Delete all data on this device</button>
     </div>`;
 }
@@ -1020,6 +1091,7 @@ function renderHelp() {
     ['Read the result', `<p><b>Red</b> means it contains an ingredient to avoid at every stage. <b>Amber</b> means it is not for the current phase. <b>Green</b> means none of the 65 listed additives were found. <b>Grey</b> means there was not enough information to check.</p><p>Open any flagged ingredient to see why it is listed. Open <b>Text that was checked</b> to fix misread words, then tap <b>Check this text again</b>.</p>`],
     ['Choose your phase', '<p>Tap Phase 1, 2 or 3. Results update straight away and the phase is remembered.</p>'],
     ['Check for your family', '<p>Tap <b>Add family</b> and give each person a name and phase. Every result then shows a line for each person. Tap a name to switch whose phase the main result uses.</p>'],
+    ['Keep a food diary', '<p>Under each result, answer <b>Did it agree with you?</b> with a thumbs up or thumbs down. The answer is saved for the person selected under Checking for, shows again when you scan the same barcode, and appears in History, where you can filter by it.</p><p>Bring the list to your next appointment if it helps the conversation.</p>'],
     ['Make a shopping list', `<p>On a result, tap <b>Add to list</b>. In the List tab you can type items, add the ${c ? 'plan' : 'CDED'} staples for the current phase, tick items off and print the list.</p>`],
     ['Save as PDF or print', '<p>Tap <b>Save as PDF</b> on a result or in History, <b>Print or save as PDF</b> in the List tab, or <b>Print avoid list</b> in the Library.</p><p>On Android, choose <b>Save as PDF</b> as the printer. On iPhone, tap the share button in the print screen, then <b>Save to Files</b>.</p>'],
     ['Use Discreet mode', '<p>Tap <b>Discreet</b> at the top, or use the switch above. The app becomes PurePlate, with neutral wording and softer warning colours. PDFs follow the same style.</p>'],
@@ -1034,6 +1106,7 @@ function renderHelp() {
     ['Where does the evidence come from?', c
       ? '<p>Each Library entry states its basis: a clinical trial, a published diet plan, lab studies or chemical similarity. Some of the evidence is early or mixed.</p>'
       : "<p>The ADDapt trial at King's College London tested three additives: carrageenan, carboxymethylcellulose and polysorbate 80. When this guide was written its results were available only as conference abstracts. Other entries come from the CDED avoid list, lab studies or chemical similarity, and one Australian feeding trial found no effect. See <b>What the evidence says</b> in the Library.</p>"],
+    ['Does my thumbs up or down change the result?', '<p>No. The result only checks ingredients. Your answer is a personal note for spotting patterns, not a test, so discuss any changes with your medical professional.</p>'],
     ['Where does product information come from?', '<p>Open Food Facts, a free database that anyone can edit. It can be incomplete or out of date, so compare it with the pack.</p>'],
     ['Why does it say Not enough to check?', '<p>The product is not in Open Food Facts, has no ingredient list there, the lookup could not connect, or the photo could not be read. Photograph the ingredient list or type it in.</p>'],
     ['How accurate is label reading?', '<p>Glare, curved packs and small print cause mistakes. Words that nearly match are marked <b>Possible match</b>. Check <b>Text that was checked</b>, correct it, and check again.</p>'],
@@ -1079,8 +1152,14 @@ function showScan(s, replaces) {
   s.text = String(s.text || '').slice(0, 1500);
   s.tags = (s.tags || []).slice(0, 150);
   state.scan = s;
+  if (replaces && !s.code && state.ratings['t:' + replaces]) {
+    state.ratings['t:' + s.t] = state.ratings['t:' + replaces]; delete state.ratings['t:' + replaces]; saveRatings();
+  }
   if (!(s.unknown && (s.why === 'net' || s.why === 'rate'))) {
-    state.history = [s].concat(state.history.filter(h => h.t !== replaces && !(s.code && h.code === s.code))).slice(0, 30);
+    const all = [s].concat(state.history.filter(h => h.t !== replaces && !(s.code && h.code === s.code)));
+    const rated = h => state.ratings[rKey(h)];
+    // Keep the 30 newest checks, plus older ones someone answered "Did it agree?" for (up to 100 in all)
+    state.history = all.slice(0, 30).concat(all.slice(30).filter(rated)).slice(0, 100);
     store.set('history', state.history);
   }
   setTab('scan'); renderResult(); renderHistory();
@@ -1252,7 +1331,7 @@ async function lookupBarcode(raw) {
 
 /* ===== 9. Events and start-up ===== */
 document.addEventListener('click', ev => {
-  const el = ev.target.closest('[data-phase],[data-tab],[data-filter],[data-open],[data-person],[data-family],[data-premove],[data-del],[data-theme-set],[data-camo-toggle],#wipe,#camo,#btnCam,#btnSnap,#reCheck,#again,#clearHist,#printHist,#printAvoid,#printScan,#addList,#staples,#printList,#clearDone,#clearList,#addPerson,#famDone');
+  const el = ev.target.closest('[data-phase],[data-tab],[data-filter],[data-open],[data-person],[data-family],[data-premove],[data-del],[data-theme-set],[data-camo-toggle],[data-rate],[data-hfilter],#wipe,#camo,#btnCam,#btnSnap,#reCheck,#again,#clearHist,#printHist,#printAvoid,#printScan,#addList,#staples,#printList,#clearDone,#clearList,#addPerson,#famDone');
   if (!el || el.disabled) return;
   if (el.dataset.phase) { state.phase = okPhase(+el.dataset.phase); me().phase = state.phase; saveProfiles(); renderAll(); }
   else if (el.dataset.person) { if (profileOf(el.dataset.person)) { state.active = el.dataset.person; state.phase = me().phase; saveProfiles(); renderAll(); } }
@@ -1275,12 +1354,14 @@ document.addEventListener('click', ev => {
   else if (el.dataset.filter) { state.filter = +el.dataset.filter; renderGuide(); }
   else if (el.dataset.open) { state.scan = state.history[+el.dataset.open]; setTab('scan'); renderResult(); const b = $('#result'); if (b.scrollIntoView) b.scrollIntoView({ block: 'start' }); }
   else if (el.id === 'camo' || el.dataset.camoToggle !== undefined) { state.camo = !state.camo; store.set('camo', state.camo); applyMode(); }
+  else if (el.dataset.rate) { if (state.scan) { setRating(state.scan, el.dataset.rate); renderResult(); renderHistory(); renderList(); } }
+  else if (el.dataset.hfilter) { state.hf = +el.dataset.hfilter; renderHistory(); }
   else if (el.dataset.themeSet) { state.theme = el.dataset.themeSet; store.set('theme', state.theme); applyTheme(); renderSettings(); }
   else if (el.id === 'wipe') {
-    if (!window.confirm('Delete your history, shopping list, family and settings from this device? This cannot be undone.')) return;
+    if (!window.confirm('Delete your history, food diary, shopping list, family and settings from this device? This cannot be undone.')) return;
     try { Object.keys(localStorage).filter(k => k.indexOf('pg.') === 0).forEach(k => localStorage.removeItem(k)); } catch (e) { /* storage blocked */ }
     state.profiles = loadProfiles(); state.active = state.profiles[0].id; state.phase = me().phase;
-    state.history = []; state.list = []; state.scan = null; state.camo = false; state.theme = 'system';
+    state.history = []; state.list = []; state.ratings = {}; state.hf = 0; state.scan = null; state.camo = false; state.theme = 'system';
     applyTheme(); applyMode(); toast('All app data on this device was deleted.');
   }
   else if (el.id === 'btnCam') { if (stream) stopCamera(); else startCamera(); }
@@ -1301,7 +1382,7 @@ document.addEventListener('click', ev => {
   else if (el.id === 'printList') printList();
   else if (el.id === 'addList') {
     const s = state.scan; if (!s) return;
-    const added = addToList({ k: 'product', t: s.title, c: s.code || '', h: s.hits.map(x => x.id), u: !!s.unknown });
+    const added = addToList({ k: 'product', t: s.title, c: s.code || '', s: s.code ? 0 : s.t, h: s.hits.map(x => x.id), u: !!s.unknown });
     renderList(); toast(added ? 'Added to your shopping list.' : 'Already on your shopping list.');
   }
   else if (el.id === 'staples') addStaples();
