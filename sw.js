@@ -1,6 +1,6 @@
 /* PureGut / PurePlate service worker: makes the app load without a connection.
    Change VERSION whenever you upload a new index.html so old caches are cleared. */
-const VERSION = 'pureplate-v3';
+const VERSION = 'pureplate-v4';
 // The app itself (same folder as this file)
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png',
   './icon-maskable-512.png', './apple-touch-icon.png'];
