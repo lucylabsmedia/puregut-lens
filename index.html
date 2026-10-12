@@ -9,8 +9,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="PurePlate">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='116' fill='%230E6B58'/%3E%3Ccircle cx='228' cy='228' r='112' fill='none' stroke='white' stroke-width='46'/%3E%3Cpath d='M312 312l88 88' stroke='white' stroke-width='46' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <!-- Dependencies, pinned. Tailwind is precompiled into the style block below (its CDN build is for development only). -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,14 +100,61 @@ html[data-camo="1"] .pill{border:1px solid rgb(var(--out-v))}
 details[open]>summary .chev{transform:rotate(180deg)}
 .chip{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .85rem;border-radius:12px;border:1.5px solid rgb(var(--out-v));font-size:.85rem;font-weight:500}
 .chip[aria-pressed=true]{background:rgb(var(--pri-c));color:rgb(var(--on-pri-c));border-color:transparent}
-.nav{display:grid;grid-template-columns:repeat(4,1fr)}
+.nav{display:grid;grid-template-columns:repeat(5,1fr)}
 .nav button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:.4rem 0 .5rem;font-size:.72rem;font-weight:600;color:rgb(var(--on-var))}
 .nav .ind{display:grid;place-items:center;width:3.5rem;height:2rem;border-radius:999px;transition:background .25s,width .3s cubic-bezier(.2,1.4,.4,1)}
 .nav button[aria-current=page]{color:rgb(var(--on-sur))}
 .nav button[aria-current=page] .ind{width:4.25rem;background:rgb(var(--pri-c));color:rgb(var(--on-pri-c))}
 .toast{position:fixed;left:50%;bottom:9.75rem;z-index:30;transform:translateX(-50%);width:-moz-max-content;width:max-content;max-width:90vw;padding:.7rem 1rem;border-radius:14px;background:rgb(var(--on-sur));color:rgb(var(--sur));font-size:.9rem}
+.btn{text-decoration:none}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+[data-s]{--s:var(--out);--s-c:var(--sur-h);--on-s-c:var(--on-sur)}
+[data-s=bad]{--s:var(--bad);--s-c:var(--bad-c);--on-s-c:var(--on-bad-c)}
+[data-s=warn]{--s:var(--warn);--s-c:var(--warn-c);--on-s-c:var(--on-warn-c)}
+[data-s=ok]{--s:var(--ok);--s-c:var(--ok-c);--on-s-c:var(--on-ok-c)}
+.who{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.who-label{font-size:.8rem;color:rgb(var(--on-var));margin-right:.1rem}
+.person{display:inline-flex;align-items:baseline;gap:.4rem;min-height:2.5rem;padding:.45rem .95rem;border-radius:999px;border:1.5px solid rgb(var(--out-v));font-weight:600;font-size:.9rem;transition:background .2s,color .2s}
+.person small{font-weight:400;font-size:.72rem;color:rgb(var(--on-var))}
+.person[aria-pressed=true]{background:rgb(var(--pri));color:rgb(var(--on-pri));border-color:transparent}
+.person[aria-pressed=true] small{color:inherit;opacity:.85}
+.person.add{gap:.35rem;color:rgb(var(--pri));border-style:dashed}
+.fam,.person.add{align-items:center}
+.fam{display:flex;width:100%;gap:.65rem;min-height:2.75rem;padding:.4rem .7rem;border-radius:16px;text-align:left}
+.fam[aria-pressed=true]{background:rgb(var(--sur-h))}
+.frow{display:grid;grid-template-columns:minmax(0,1fr) 7.25rem auto;gap:.5rem;align-items:center}
+dialog.sheet{border:0;padding:0;border-radius:28px;width:calc(100% - 32px);max-width:32rem;max-height:calc(100vh - 48px);overflow:auto;background:rgb(var(--sur-c));color:rgb(var(--on-sur))}
+dialog.sheet::backdrop{background:rgba(0,0,0,.45)}
+.li{display:flex;align-items:center;gap:.5rem;min-height:3.5rem;padding:.4rem .35rem .4rem 1rem;border-radius:20px;background:rgb(var(--sur-c))}
+.li input[type=checkbox]{width:1.35rem;height:1.35rem;flex:none;margin:0;accent-color:rgb(var(--pri))}
+.iconbtn{display:grid;place-items:center;width:2.75rem;height:2.75rem;flex:none;border-radius:999px;color:rgb(var(--on-var))}
+.iconbtn:hover{background:rgb(var(--sur-h))}
+.iconbtn:disabled{opacity:.35;cursor:not-allowed}
+#print{display:none}
+@media print{@page{margin:14mm}
+body,html{background:#fff!important;color:#000!important;min-height:0!important;height:auto!important}
+#print td:first-child{width:24%}
+body>:not(#print){display:none!important}
+#print{display:block!important;font:10.5pt/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#000}
+#print h1{font-size:18pt;font-weight:700;margin:2pt 0 3pt}
+#print h2{font-size:12pt;font-weight:700;margin:14pt 0 5pt;padding-bottom:2pt;border-bottom:1px solid #888;-moz-column-break-after:avoid;break-after:avoid}
+#print p{margin:4pt 0}
+#print table{width:100%;border-collapse:collapse;margin:4pt 0}
+#print td,#print th{border:1px solid #aaa;padding:4pt 6pt;text-align:left;vertical-align:top}
+#print th{background:#eee;font-weight:700}
+#print li,#print tr{-moz-column-break-inside:avoid;break-inside:avoid}
+#print li{padding:3pt 0;border-bottom:1px dotted #bbb}
+#print .cols{-moz-columns:2;column-count:2;-moz-column-gap:18pt;column-gap:18pt}
+#print .box{display:inline-block;width:10pt;height:10pt;border:1.2pt solid #000;margin-right:7pt;vertical-align:-1pt}
+#print .p-small{font-size:8.5pt;color:#444}
+#print .p-text{white-space:pre-wrap;font-size:9pt}
+#print .p-foot{margin-top:16pt;padding-top:5pt;border-top:1px solid #888;font-size:8pt;color:#444}
+}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+.visible{visibility:visible}
+.col-span-2{grid-column:span 2/span 2}
 .mx-auto{margin-left:auto;margin-right:auto}
+.-mb-2{margin-bottom:-.5rem}
 .mb-2{margin-bottom:.5rem}
 .mt-1{margin-top:.25rem}
 .mt-2{margin-top:.5rem}
@@ -115,6 +162,7 @@ details[open]>summary .chev{transform:rotate(180deg)}
 .mt-4{margin-top:1rem}
 .block{display:block}
 .flex{display:flex}
+.table{display:table}
 .grid{display:grid}
 .h-10{height:2.5rem}
 .h-11{height:2.75rem}
@@ -137,29 +185,25 @@ details[open]>summary .chev{transform:rotate(180deg)}
 .grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .flex-col{flex-direction:column}
 .flex-wrap{flex-wrap:wrap}
-.items-end{align-items:flex-end}
 .items-center{align-items:center}
 .justify-center{justify-content:center}
-.justify-between{justify-content:space-between}
 .gap-2{gap:.5rem}
 .gap-3{gap:.75rem}
+.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}
 .space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}
 .space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}
 .space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}
-.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}
-.divide-out-v>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(var(--out-v)/var(--tw-divide-opacity,1))}
 .truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rounded-2xl{border-radius:1rem}
-.border{border-width:1px}
-.border-out-v{--tw-border-opacity:1;border-color:rgb(var(--out-v)/var(--tw-border-opacity,1))}
+.p-5{padding:1.25rem}
 .px-4{padding-left:1rem;padding-right:1rem}
 .px-8{padding-left:2rem;padding-right:2rem}
-.py-2{padding-top:.5rem;padding-bottom:.5rem}
 .py-3{padding-top:.75rem;padding-bottom:.75rem}
+.pb-2{padding-bottom:.5rem}
 .pb-4{padding-bottom:1rem}
 .pb-52{padding-bottom:13rem}
 .pt-1{padding-top:.25rem}
 .pt-2{padding-top:.5rem}
+.pt-4{padding-top:1rem}
 .text-left{text-align:left}
 .text-center{text-align:center}
 .text-2xl{font-size:1.5rem;line-height:2rem}
@@ -175,9 +219,9 @@ details[open]>summary .chev{transform:rotate(180deg)}
 .font-semibold{font-weight:600}
 .leading-snug{line-height:1.375}
 .leading-tight{line-height:1.25}
-.text-ink{--tw-text-opacity:1;color:rgb(var(--on-sur)/var(--tw-text-opacity,1))}
 .text-mut{--tw-text-opacity:1;color:rgb(var(--on-var)/var(--tw-text-opacity,1))}
 .text-pri{--tw-text-opacity:1;color:rgb(var(--pri)/var(--tw-text-opacity,1))}
+.line-through{text-decoration-line:line-through}
 .antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 </style>
 </head>
@@ -199,11 +243,15 @@ details[open]>summary .chev{transform:rotate(180deg)}
 <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></symbol>
 <symbol id="i-circle-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
 <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
-<symbol id="i-gift" viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5"/><rect x="3" y="7" width="18" height="4" rx="1"/></symbol>
-<symbol id="i-armchair" viewBox="0 0 24 24"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/></symbol>
-<symbol id="i-hand-coins" viewBox="0 0 24 24"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></symbol>
-<symbol id="i-microscope" viewBox="0 0 24 24"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></symbol>
 <symbol id="i-flask-conical" viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"/><path d="M6.453 15h11.094"/><path d="M8.5 2h7"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
+<symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></symbol>
+<symbol id="i-shopping-basket" viewBox="0 0 24 24"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></symbol>
+<symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-trash-2" viewBox="0 0 24 24"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+<symbol id="i-external-link" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
 <symbol id="i-stamp" viewBox="0 0 100 100"><path d="M44.8 5.7Q50 0 55.2 5.7Q60.4 11.4 67.7 9Q75 6.7 76.6 14.2Q78.3 21.7 85.8 23.4Q93.3 25 91 32.3Q88.6 39.6 94.3 44.8Q100 50 94.3 55.2Q88.6 60.4 91 67.7Q93.3 75 85.8 76.6Q78.3 78.3 76.6 85.8Q75 93.3 67.7 91Q60.4 88.6 55.2 94.3Q50 100 44.8 94.3Q39.6 88.6 32.3 91Q25 93.3 23.4 85.8Q21.7 78.3 14.2 76.6Q6.7 75 9 67.7Q11.4 60.4 5.7 55.2Q0 50 5.7 44.8Q11.4 39.6 9 32.3Q6.7 25 14.2 23.4Q21.7 21.7 23.4 14.2Q25 6.7 32.3 9Q39.6 11.4 44.8 5.7Z"/></symbol>
 </svg>
 <header class="top">
@@ -226,6 +274,7 @@ details[open]>summary .chev{transform:rotate(180deg)}
       <h1 class="hl text-2xl" data-t="scanH">Check a product</h1>
       <p class="mt-2 text-sm text-mut" data-t="scanP"></p>
     </div>
+    <div class="who" data-who aria-label="Who you are checking for"></div>
     <div class="seg" data-seg role="group" aria-label="Diet phase"></div>
     <div class="vf" id="vf">
       <video id="video" playsinline muted autoplay hidden></video>
@@ -266,9 +315,11 @@ details[open]>summary .chev{transform:rotate(180deg)}
       <h1 class="hl text-3xl" data-t="guideH">Additive library</h1>
       <p class="mt-2 text-sm text-mut" data-t="guideP"></p>
     </div>
+    <div class="who" data-who aria-label="Who you are checking for"></div>
     <div class="seg" data-seg role="group" aria-label="Diet phase"></div>
     <input id="q" type="search" class="field" placeholder="Search a name, E-number or label term" aria-label="Search the library">
     <div id="filters" class="flex flex-wrap gap-2"></div>
+    <button id="printAvoid" type="button" class="btn btn-out w-full"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg>Print avoid list</button>
     <p id="gCount" class="text-sm text-mut" role="status"></p>
     <div id="gList" class="space-y-2"></div>
     <details class="card">
@@ -285,14 +336,32 @@ details[open]>summary .chev{transform:rotate(180deg)}
 
   <!-- History -->
   <section id="v-history" class="space-y-4" hidden>
-    <div class="flex items-end justify-between gap-3">
-      <h1 class="hl text-3xl">History</h1>
-      <button id="clearHist" type="button" class="btn btn-out h-10 min-h-0 px-4 text-sm">Clear history</button>
+    <h1 class="hl text-3xl">History</h1>
+    <div id="hTools" class="grid grid-cols-2 gap-2">
+      <button id="printHist" type="button" class="btn btn-tonal"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg>Save as PDF</button>
+      <button id="clearHist" type="button" class="btn btn-out">Clear history</button>
     </div>
     <div id="hList" class="space-y-2"></div>
   </section>
 
-  <!-- Fundraiser preview -->
+  <!-- Shopping list -->
+  <section id="v-list" class="space-y-4" hidden>
+    <h1 class="hl text-3xl">Shopping list</h1>
+    <div class="who" data-who aria-label="Who you are checking for"></div>
+    <div id="lItems"></div>
+    <form id="fList" class="flex gap-2">
+      <input id="inList" class="field" autocomplete="off" maxlength="80" placeholder="Add an item" aria-label="Add an item">
+      <button class="btn btn-tonal flex-none"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>Add</button>
+    </form>
+    <button id="staples" type="button" class="btn btn-out w-full"><svg class="ic" aria-hidden="true"><use href="#i-shopping-basket"/></svg><span data-t="staples">Add CDED staples</span></button>
+    <div id="lTools" class="grid grid-cols-2 gap-2" hidden>
+      <button id="printList" type="button" class="btn btn-fill col-span-2"><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg>Print or save as PDF</button>
+      <button id="clearDone" type="button" class="btn btn-out">Clear ticked</button>
+      <button id="clearList" type="button" class="btn btn-out">Clear list</button>
+    </div>
+  </section>
+
+  <!-- Support: donation link and fundraiser (settings in SUPPORT below) -->
   <section id="v-impact" class="space-y-4" hidden></section>
 </main>
 
@@ -302,10 +371,24 @@ details[open]>summary .chev{transform:rotate(180deg)}
     <button type="button" data-tab="scan"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-scan-barcode"/></svg></span>Scan</button>
     <button type="button" data-tab="guide"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg></span>Library</button>
     <button type="button" data-tab="history"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-history"/></svg></span>History</button>
-    <button type="button" data-tab="impact"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-heart-handshake"/></svg></span><span data-t="navImpact">Impact</span></button>
+    <button type="button" data-tab="list"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-shopping-basket"/></svg></span>List</button>
+    <button type="button" data-tab="impact"><span class="ind"><svg class="ic" aria-hidden="true"><use href="#i-heart-handshake"/></svg></span><span data-t="navImpact">Support</span></button>
   </nav>
 </footer>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<dialog id="family" class="sheet" aria-labelledby="famTitle">
+  <div class="space-y-4 p-5">
+    <div>
+      <h2 id="famTitle" class="hl text-2xl">Family</h2>
+      <p class="mt-1 text-sm text-mut">Give each person their own phase. Every scan then shows a result for each of them. Names stay on this device.</p>
+    </div>
+    <div id="famRows" class="space-y-2"></div>
+    <button id="addPerson" type="button" class="btn btn-out w-full"><svg class="ic" aria-hidden="true"><use href="#i-user-plus"/></svg>Add person</button>
+    <button id="famDone" type="button" class="btn btn-fill w-full">Done</button>
+  </div>
+</dialog>
+<!-- Filled just before printing; only this is visible on paper or in a saved PDF -->
+<div id="print"></div>
 
 <script>
 /* PureGut CDED & Additive Lens. Static client app: no build step, no server.
@@ -313,6 +396,33 @@ details[open]>summary .chev{transform:rotate(180deg)}
    6 camera and barcode, 7 OCR, 8 Open Food Facts, 9 events and start-up. */
 (() => {
 'use strict';
+
+/* ===== EDIT HERE: donation settings =====
+   donateUrl  Your Stripe Payment Link (https://buy.stripe.com/...). Leave '' to show "Donations open soon".
+   orgName    The legal name that receives the money, exactly as it appears on your Stripe account.
+   status     'business' (not a registered charity, gifts are not tax-deductible)
+              or 'nonprofit' (registered 501(c)(3); fill in ein).
+   raised     The real total raised so far, or null to hide the progress meter. Never enter an estimate.
+   updated    When you last updated raised, for example 'October 12, 2026'.
+   contact    An email address for donor questions, or ''.
+   Never put card numbers, account numbers or passwords in this file: it is public. */
+const SUPPORT = {
+  donateUrl: '',
+  orgName: '',
+  status: 'business',
+  ein: '',
+  goal: 15000,
+  raised: null,
+  updated: '',
+  contact: '',
+  goalName: "2027 Crohn's Patient Wellness & CDED Cooking Retreat",
+  goalNameDiscreet: '2027 Wellness & Cooking Retreat',
+  uses: [ // [shown normally, shown in Discreet mode]
+    ['Sponsored retreat seats for patients who could not otherwise attend', 'Sponsored retreat seats'],
+    ['Grants toward diet-plan groceries and nutrition support', 'Grocery and nutrition grants'],
+    ['Research into how food additives affect the gut lining', 'Nutrition research']
+  ]
+};
 
 /* ===== 1. Clinical dataset (embedded, works offline) =====
    riskTier: 1 = avoid in every phase, 2 = caution (phase-restricted), 3 = permitted whole ingredient
@@ -439,12 +549,27 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem('pg.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem('pg.' + k, JSON.stringify(v)); } catch (e) { /* storage full or blocked */ } }
 };
+const okPhase = p => ([1, 2, 3].includes(p) ? p : 1);
+// Family profiles: each person has a name and a phase. The first run turns the saved phase into "Me".
+function loadProfiles() {
+  let list = store.get('profiles', null);
+  if (!Array.isArray(list) || !list.length) list = [{ id: 'p1', name: 'Me', phase: okPhase(store.get('phase', 1)) }];
+  return list.filter(p => p && p.id).slice(0, 8)
+    .map(p => ({ id: String(p.id), name: String(p.name || 'Me').slice(0, 24), phase: okPhase(p.phase) }));
+}
 const state = {
-  phase: [1, 2, 3].includes(store.get('phase', 1)) ? store.get('phase', 1) : 1,
+  profiles: loadProfiles(),
+  active: store.get('active', null),
+  phase: 1,
   camo: store.get('camo', false) === true,
   history: Array.isArray(store.get('history', [])) ? store.get('history', []) : [],
+  list: Array.isArray(store.get('list', [])) ? store.get('list', []).filter(x => x && x.id && x.t) : [],
   tab: 'scan', scan: null, filter: 0, q: ''
 };
+if (!state.profiles.some(p => p.id === state.active)) state.active = state.profiles[0].id;
+const me = () => state.profiles.find(p => p.id === state.active) || state.profiles[0];
+state.phase = me().phase;
+function saveProfiles() { store.set('profiles', state.profiles); store.set('active', state.active); store.set('phase', state.phase); }
 // Copy that changes in camouflage mode: [clinical, neutral]
 const COPY = {
   doc: ['PureGut CDED & Additive Lens', 'PurePlate Clean Food Lens'],
@@ -455,7 +580,8 @@ const COPY = {
   guideH: ['Additive library', 'Ingredient guide'],
   guideP: ["65 emulsifiers, thickeners and other additives restricted in Crohn's disease diet protocols, plus the whole foods CDED is built on.", '65 ingredients on the avoid and caution lists, plus whole foods that fit the plan.'],
   evH: ['What the evidence says, and its limits', 'About this guide'],
-  navImpact: ['Impact', 'Community'],
+  navImpact: ['Support', 'Community'],
+  staples: ['Add CDED staples', 'Add plan staples'],
   disc: ['For educational and dietary lifestyle reference under CDED protocols. Not intended to diagnose, treat, or replace consultation with a gastroenterologist or IBD specialized dietitian.', 'For educational and dietary lifestyle reference. Not intended to diagnose, treat, or replace advice from your doctor or dietitian.']
 };
 const t = k => COPY[k][state.camo ? 1 : 0];
@@ -624,7 +750,9 @@ function renderResult() {
     </div>
     <div><p class="text-lg font-semibold leading-tight">${esc(s.title)}</p>
       ${s.code ? `<p class="text-sm text-mut">Open Food Facts, barcode ${esc(s.code)}</p>` : ''}</div>
+    ${state.profiles.length > 1 ? `<p class="-mb-2 text-xs text-mut">Phase for ${esc(me().name)}</p>` : ''}
     <div class="seg" data-seg>${segHTML()}</div>
+    ${familyHTML(s)}
     ${flagged.length ? `<h2 class="pt-1 font-semibold">${c ? 'Flagged ingredients' : 'Flagged additives'}</h2>
       <div class="space-y-2">${flagged.map(h => cardHTML(DB[h.id], h)).join('')}</div>` : ''}
     ${whole.length ? `<h2 class="pt-1 font-semibold">Whole ingredients recognised</h2>
@@ -635,6 +763,10 @@ function renderResult() {
       <textarea id="reText" class="field mt-3" rows="5" aria-label="Ingredient text that was checked">${esc(s.text || '')}</textarea>
       <button id="reCheck" type="button" class="btn btn-tonal mt-2 w-full">Check this text again</button></details>
     ${s.kind === 'barcode' ? '<p class="text-xs text-mut">Product data from Open Food Facts contributors under the Open Database License. It is crowd-sourced and can be wrong or out of date, so compare it with the pack.</p>' : ''}
+    <div class="grid grid-cols-2 gap-2">
+      ${v === 'red' || v === 'unknown' ? '' : `<button id="addList" type="button" class="btn btn-tonal">${ic('shopping-basket')}Add to list</button>`}
+      <button id="printScan" type="button" class="btn btn-tonal${v === 'red' || v === 'unknown' ? ' col-span-2' : ''}">${ic('printer')}Save as PDF</button>
+    </div>
     <button id="again" type="button" class="btn btn-out w-full">${ic('scan-barcode')}Check another product</button>`;
 }
 function renderGuide() {
@@ -648,7 +780,7 @@ function renderGuide() {
 }
 function renderHistory() {
   const h = state.history;
-  $('#clearHist').hidden = !h.length;
+  $('#hTools').hidden = !h.length;
   $('#hList').innerHTML = h.length ? h.map((s, i) => {
     const v = verdictOf(s, state.phase), d = new Date(s.t);
     return `<button type="button" class="add flex w-full items-center gap-3 px-4 py-3 text-left" data-open="${i}" data-s="${{ red: 'bad', amber: 'warn', green: 'ok', unknown: 'na' }[v]}">
@@ -657,38 +789,171 @@ function renderHistory() {
       <span class="pill">${{ red: 'Avoid', amber: 'Not in Phase ' + state.phase, green: 'Clear', unknown: 'Unread' }[v]}</span></button>`;
   }).join('') : '<p class="card text-sm text-mut">No scans yet. Products you check are saved here, on this device only.</p>';
 }
-// Fundraiser dashboard. All figures are illustrative: nothing here takes or records a payment.
-const IMPACT = {
-  raised: 11200, goal: 15000,
-  rows: [['armchair', 'Sponsored retreat seats', 14, 20, ''], ['hand-coins', 'Patient dietary grants', 9, 15, ''], ['microscope', 'Mucosal barrier clinical research', 2400, 4000, '$']],
-  ledger: [['PIF-0147', '28 Sep 2026', 250, 'Retreat seat'], ['PIF-0146', '21 Sep 2026', 60, 'Dietary grant'], ['PIF-0145', '14 Sep 2026', 500, 'Research fund'], ['PIF-0144', '02 Sep 2026', 125, 'Retreat seat']]
-};
-function renderImpact() {
-  const c = state.camo, pct = Math.round(IMPACT.raised / IMPACT.goal * 100);
-  const neutral = ['Sponsored retreat seats', 'Dietary grants', 'Nutrition research'];
+/* ----- Family view (profiles stay on this device) ----- */
+const S_OF = { red: 'bad', amber: 'warn', green: 'ok', unknown: 'na' };
+const shortV = (v, p) => (v === 'amber' ? 'Not in Phase ' + p : { red: 'Avoid', green: 'Clear', unknown: 'Not checked' }[v]);
+function whoHTML() {
+  return '<span class="who-label">Checking for</span>' + state.profiles.map(p =>
+    `<button type="button" class="person" data-person="${esc(p.id)}" aria-pressed="${p.id === state.active}">${esc(p.name)}<small>Phase ${p.phase}</small></button>`).join('') +
+    `<button type="button" class="person add" data-family>${ic('users', 'h-4 w-4')}${state.profiles.length > 1 ? 'Edit family' : 'Add family'}</button>`;
+}
+function renderWho() { document.querySelectorAll('[data-who]').forEach(el => { el.innerHTML = whoHTML(); }); }
+function familyHTML(s) {
+  if (state.profiles.length < 2 || s.unknown) return '';
+  return `<div class="card"><h2 class="font-semibold">For your family</h2><div class="mt-2 space-y-1">${state.profiles.map(p => {
+    const v = verdictOf(s, p.phase);
+    return `<button type="button" class="fam" data-person="${esc(p.id)}" data-s="${S_OF[v]}" aria-pressed="${p.id === state.active}"><span class="dot"></span><span class="min-w-0 flex-1 truncate font-medium">${esc(p.name)}</span><span class="text-xs text-mut">Phase ${p.phase}</span><span class="pill">${shortV(v, p.phase)}</span></button>`;
+  }).join('')}</div></div>`;
+}
+function renderFamily() {
+  const many = state.profiles.length > 1;
+  $('#famRows').innerHTML = state.profiles.map((p, i) => `<div class="frow">
+    <input class="field" data-pname="${esc(p.id)}" value="${esc(p.name)}" maxlength="24" autocomplete="off" aria-label="Name of person ${i + 1}">
+    <select class="field" data-pphase="${esc(p.id)}" aria-label="Phase for person ${i + 1}">${[1, 2, 3].map(n => `<option value="${n}"${p.phase === n ? ' selected' : ''}>Phase ${n}</option>`).join('')}</select>
+    <button type="button" class="iconbtn" data-premove="${esc(p.id)}" aria-label="Remove ${esc(p.name)}"${many ? '' : ' disabled'}>${ic('trash-2', 'h-5 w-5')}</button></div>`).join('');
+  $('#addPerson').disabled = state.profiles.length >= 8;
+}
+function openFamily() {
+  renderFamily();
+  const d = $('#family');
+  if (typeof d.showModal === 'function') { if (!d.open) d.showModal(); } else d.setAttribute('open', '');
+}
+function closeFamily() {
+  const d = $('#family');
+  if (typeof d.close === 'function' && d.open) d.close(); else { d.removeAttribute('open'); renderAll(); }
+}
+const profileOf = id => state.profiles.find(p => p.id === id);
+
+/* ----- Shopping list (this device only) ----- */
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+function saveList() { store.set('list', state.list); }
+// Item kinds: 'product' (from a scan), 'staple' (CDED whole food), 'item' (typed by the user)
+function itemStatus(it, phase) {
+  if (it.k === 'staple') {
+    const e = DB[it.w], ok = !e || e.riskTier !== 3 || e.cdedPhaseAllowed <= phase;
+    return [ok ? 'ok' : 'warn', ok ? 'Whole food' : 'From Phase ' + e.cdedPhaseAllowed];
+  }
+  const v = verdictOf({ hits: (it.h || []).filter(id => DB[id]).map(id => ({ id })), unknown: !!it.u }, phase);
+  if (it.k === 'item' && v === 'green') return ['na', ''];
+  return [S_OF[v], shortV(v, phase)];
+}
+function familyNote(it) {
+  if (state.profiles.length < 2) return '';
+  const no = state.profiles.filter(p => ['warn', 'bad'].includes(itemStatus(it, p.phase)[0]));
+  return no.length ? 'Not for ' + no.map(p => p.name).join(', ') : '';
+}
+function addToList(item) {
+  const key = String(item.c || item.t).toLowerCase();
+  if (state.list.some(x => String(x.c || x.t).toLowerCase() === key)) return false;
+  state.list.push(Object.assign({ id: uid(), d: false }, item));
+  saveList();
+  return true;
+}
+function addStaples() {
+  let n = 0;
+  DB.filter(e => e.riskTier === 3 && e.cdedPhaseAllowed <= state.phase && e.canonicalName !== 'Natural pectin')
+    .forEach(e => { if (addToList({ k: 'staple', t: e.canonicalName, w: e.id })) n++; });
+  renderList();
+  toast(n ? `Added ${plural(n, 'staple')} for Phase ${state.phase}.` : 'These staples are already on your list.');
+}
+function renderList() {
+  const L = state.list;
+  const row = it => {
+    const [s, label] = itemStatus(it, state.phase), note = familyNote(it);
+    return `<li class="li" data-s="${s}"><label class="flex min-w-0 flex-1 cursor-pointer items-center gap-3"><input type="checkbox" data-done="${esc(it.id)}"${it.d ? ' checked' : ''}>
+      <span class="min-w-0 flex-1"><span class="block font-medium${it.d ? ' text-mut line-through' : ''}">${esc(it.t)}</span>${note ? `<span class="block text-xs text-mut">${esc(note)}</span>` : ''}</span></label>
+      ${label ? `<span class="pill">${label}</span>` : ''}<button type="button" class="iconbtn" data-del="${esc(it.id)}" aria-label="Remove ${esc(it.t)}">${ic('x', 'h-5 w-5')}</button></li>`;
+  };
+  const todo = L.filter(x => !x.d), done = L.filter(x => x.d);
+  $('#lItems').innerHTML = L.length
+    ? `<ul class="space-y-2">${todo.map(row).join('')}</ul>${done.length ? `<h2 class="pb-2 pt-4 text-sm font-semibold text-mut">In the basket</h2><ul class="space-y-2">${done.map(row).join('')}</ul>` : ''}`
+    : '<p class="card text-sm text-mut">Your list is empty. Type an item below, add the staples, or tap Add to list on a scan result.</p>';
+  $('#lTools').hidden = !L.length;
+}
+
+/* ----- Print and PDF export: the browser's print dialog offers Save as PDF ----- */
+const pDate = ms => new Date(ms).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+const vWord = (v, p) => ({ red: state.camo ? 'Skip this one' : 'Prohibited', amber: (state.camo ? 'Not for this stage' : 'Phase restricted') + ' (Phase ' + p + ')',
+  green: state.camo ? 'Looks clean' : 'Additive screen clear', unknown: 'Not enough to check' }[v]);
+function printDoc(title, body) {
+  $('#print').innerHTML = `<header><p class="p-small">${esc(t('appName'))}, ${esc(t('appSub'))}</p><h1>${esc(title)}</h1>
+    <p class="p-small">Created ${esc(pDate(Date.now()))}</p></header>${body}<footer class="p-foot">${esc(t('disc'))}</footer>`;
+  document.title = (t('appName') + ' ' + title).replace(/[\\/:*?"<>|]+/g, ' ');
+  const restore = () => { document.title = t('doc'); window.removeEventListener('afterprint', restore); };
+  window.addEventListener('afterprint', restore);
+  try { window.print(); setTimeout(restore, 3000); } catch (e) { restore(); toast('Printing is not available here. Open the app in your browser instead.'); }
+}
+function famTable(s) {
+  return `<table><thead><tr><th>Person</th><th>Phase</th><th>Result</th></tr></thead><tbody>${state.profiles.map(p =>
+    `<tr><td>${esc(p.name)}</td><td>${p.phase}</td><td>${vWord(verdictOf(s, p.phase), p.phase)}</td></tr>`).join('')}</tbody></table>`;
+}
+function printScan(s) {
+  const flagged = s.hits.filter(h => DB[h.id] && DB[h.id].riskTier < 3).map(h => DB[h.id]);
+  const whole = s.hits.filter(h => DB[h.id] && DB[h.id].riskTier === 3).map(h => DB[h.id].canonicalName);
+  const src = s.kind === 'barcode' ? 'Open Food Facts' + (s.code ? ', barcode ' + s.code : '') : s.kind === 'photo' ? 'Label photo' : 'Typed ingredients';
+  printDoc(s.title, `<p class="p-small">Checked ${esc(pDate(s.t))}. Source: ${esc(src)}.</p>
+    <h2>Result</h2>${famTable(s)}
+    <h2>${state.camo ? 'Flagged ingredients' : 'Flagged additives'}</h2>${flagged.length
+      ? `<table><thead><tr><th>Name</th><th>Rule</th><th>Why it is flagged</th></tr></thead><tbody>${flagged.map(e => `<tr><td><b>${esc(e.canonicalName)}</b>${e.eNumber ? '<br>' + esc(e.eNumber) : ''}</td><td>${esc(ruleLong(e))}</td><td>${esc(e.mechanismSummary)}<br><span class="p-small">Basis: ${e.sources.map(x => SRC[x]).join('; ')}.</span></td></tr>`).join('')}</tbody></table>`
+      : `<p>${s.unknown ? 'Not enough ingredient information to check.' : 'None of the 65 listed additives were found.'}</p>`}
+    ${whole.length ? `<h2>Whole ingredients recognised</h2><p>${esc(whole.join(', '))}</p>` : ''}
+    <h2>Ingredient text checked</h2><p class="p-text">${esc(s.text || 'No ingredient text.')}</p>
+    <p class="p-small">This screens additives only. Whole food groups such as dairy, wheat and processed meat are not checked.${s.kind === 'barcode' ? ' Product data from Open Food Facts contributors under the Open Database License; compare it with the pack.' : ''}</p>`);
+}
+function printHistory() {
+  const P = state.profiles;
+  printDoc('Scan history', `<table><thead><tr><th>Checked</th><th>Product</th>${P.map(p => `<th>${esc(p.name)}, Phase ${p.phase}</th>`).join('')}</tr></thead><tbody>${state.history.map(s =>
+    `<tr><td>${esc(pDate(s.t))}</td><td>${esc(s.title)}${s.code ? '<br><span class="p-small">' + esc(s.code) + '</span>' : ''}</td>${P.map(p => `<td>${shortV(verdictOf(s, p.phase), p.phase)}</td>`).join('')}</tr>`).join('')}</tbody></table>`);
+}
+function printList() {
+  const groups = [['staple', state.camo ? 'Whole foods' : 'CDED staples'], ['product', 'Checked products'], ['item', 'Other items']];
+  printDoc('Shopping list', groups.map(([k, title]) => {
+    const items = state.list.filter(x => x.k === k);
+    return items.length ? `<h2>${title}</h2><ul>${items.map(it => {
+      const label = itemStatus(it, state.phase)[1], note = familyNote(it), extra = [label, note].filter(Boolean).join('; ');
+      return `<li><span class="box"></span>${esc(it.t)}${extra ? ` <span class="p-small">(${esc(extra)})</span>` : ''}</li>`;
+    }).join('')}</ul>` : '';
+  }).join('') + `<p class="p-small">Results shown for ${esc(me().name)}, Phase ${state.phase}.</p>`);
+}
+function printAvoid() {
+  const line = e => `<li><b>${esc(e.canonicalName)}</b>${e.eNumber ? ' (' + esc(e.eNumber) + ')' : ''}<br><span class="p-small">${esc(e.aliases.slice(0, 4).join(', '))}</span></li>`;
+  const t1 = DB.filter(e => e.riskTier === 1), t2 = DB.filter(e => e.riskTier === 2);
+  printDoc(state.camo ? 'Ingredient avoid list' : 'Additive avoid list',
+    `<h2>Avoid at every stage (${t1.length})</h2><ul class="cols">${t1.map(line).join('')}</ul>
+    <h2>Not in Phases 1 and 2; occasional in maintenance with your dietitian (${t2.length})</h2><ul class="cols">${t2.map(line).join('')}</ul>`);
+}
+
+/* ----- Support: real donation link, set in SUPPORT at the top of this script ----- */
+function validUrl(u) { try { return new URL(u).protocol === 'https:'; } catch (e) { return false; } }
+function renderSupport() {
+  const c = state.camo, S = SUPPORT, live = validUrl(S.donateUrl);
+  const who = S.orgName ? esc(S.orgName) : 'the organiser';
+  const real = typeof S.raised === 'number' && S.raised >= 0 && S.goal > 0;
+  const pct = real ? Math.min(100, Math.round(S.raised / S.goal * 100)) : 0;
+  const host = live ? new URL(S.donateUrl).hostname : '';
+  const processor = /(^|\.)stripe\.com$/.test(host) ? 'Stripe' : 'the payment page';
+  const status = S.status === 'nonprofit'
+    ? `${who} is a registered nonprofit${S.ein ? ' (EIN ' + esc(S.ein) + ')' : ''}. Gifts may be tax-deductible, so keep your receipt.`
+    : `Gifts go to ${who}, which is not a registered charity, so they are not tax-deductible.`;
   $('#v-impact').innerHTML = `
-    <h1 class="hl text-3xl">${c ? 'Community' : 'Impact'}</h1>
-    <p class="rounded-2xl border border-out-v px-4 py-3 text-sm text-mut"><span class="font-semibold text-ink">Sample figures.</span> This dashboard is a preview with illustrative numbers. No money is collected here.</p>
+    <h1 class="hl text-3xl">${c ? 'Community' : 'Support'}</h1>
     <div class="card tone-ter space-y-3">
-      <p class="text-sm font-medium">${c ? '2027 Wellness &amp; Cooking Retreat' : '2027 Crohn&#39;s Patient Wellness &amp; CDED Cooking Retreat'}</p>
-      <p class="hl text-4xl">${money(IMPACT.raised)} <span class="text-base font-medium">of ${money(IMPACT.goal)} raised</span></p>
+      <p class="text-sm font-medium">${esc(c ? S.goalNameDiscreet : S.goalName)}</p>
+      ${real ? `<p class="hl text-4xl">${money(S.raised)} <span class="text-base font-medium">of ${money(S.goal)} raised</span></p>
       <div class="bar big" role="progressbar" aria-label="Fundraising progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%"></i></div>
-      <p class="text-sm">${pct}% of the goal, ${money(IMPACT.goal - IMPACT.raised)} to go</p>
+      <p class="text-sm">${pct}% of the goal${S.updated ? ', updated ' + esc(S.updated) : ''}</p>`
+      : `<p class="hl text-4xl">${money(S.goal)} <span class="text-base font-medium">goal</span></p>`}
     </div>
-    <div class="space-y-2">${IMPACT.rows.map((r, i) => `<div class="card flex items-center gap-3">${ic(r[0], 'text-pri')}
-      <div class="min-w-0 flex-1"><div class="flex justify-between gap-2 text-sm"><span class="font-semibold">${c ? neutral[i] : r[1]}</span>
-      <span class="flex-none text-mut">${r[4] ? money(r[2]) + ' of ' + money(r[3]) : r[2] + ' of ' + r[3]}</span></div>
-      <div class="bar mt-2"><i style="width:${Math.round(r[2] / r[3] * 100)}%"></i></div></div></div>`).join('')}</div>
-    <button id="pif" type="button" class="btn btn-fill w-full">${ic('gift')}Pay it forward</button>
-    <div class="card"><h2 class="font-semibold">Sample receipt ledger</h2>
-      <p class="mb-2 text-xs text-mut">Receipts would be listed here without donor names.</p>
-      <ul class="divide-y divide-out-v text-sm">${IMPACT.ledger.map(l => `<li class="flex items-center justify-between gap-3 py-2">
-        <span><span class="block font-medium">${esc(l[3])}</span><span class="block text-xs text-mut">${esc(l[0])}, ${esc(l[1])}</span></span>
-        <span class="font-semibold">${money(l[2])}</span></li>`).join('')}</ul></div>`;
+    <div class="card"><h2 class="font-semibold">Where gifts go</h2>
+      <ul class="mt-3 space-y-2 text-sm">${S.uses.map(u => `<li class="flex gap-3">${ic('circle-check', 'h-5 w-5 text-pri')}<span>${esc(c ? u[1] : u[0])}</span></li>`).join('')}</ul></div>
+    ${live ? `<a id="donate" class="btn btn-fill w-full" href="${esc(S.donateUrl)}" target="_blank" rel="noopener">${ic('heart-handshake')}Donate${ic('external-link', 'h-4 w-4')}</a>`
+      : '<button id="donate" type="button" class="btn btn-fill w-full" disabled>Donations open soon</button>'}
+    <p class="text-sm text-mut">${live ? `${status} Payments are handled by ${processor}. This app never sees your card details.` : 'The donation link is not set up yet.'}${S.contact ? ` Questions: <a href="mailto:${esc(S.contact)}">${esc(S.contact)}</a>.` : ''}</p>
+    <p class="text-sm text-mut">Scanning and every safety check stay free for everyone. Gifts fund the retreat and keep the family view, shopping list and PDF exports free too.</p>`;
 }
 function renderAll() {
   document.querySelectorAll('[data-seg]').forEach(el => { el.innerHTML = segHTML(); });
-  renderResult(); renderGuide(); renderHistory(); renderImpact();
+  renderWho(); renderResult(); renderGuide(); renderHistory(); renderList(); renderSupport();
 }
 // Camouflage mode swaps clinical wording and warning colours for a neutral identity
 function applyMode() {
@@ -702,7 +967,7 @@ function applyMode() {
 }
 function setTab(tab) {
   state.tab = tab;
-  ['scan', 'guide', 'history', 'impact'].forEach(n => { $('#v-' + n).hidden = n !== tab; });
+  ['scan', 'guide', 'history', 'list', 'impact'].forEach(n => { $('#v-' + n).hidden = n !== tab; });
   document.querySelectorAll('[data-tab]').forEach(b => {
     if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   });
@@ -888,9 +1153,25 @@ async function lookupBarcode(raw) {
 
 /* ===== 9. Events and start-up ===== */
 document.addEventListener('click', ev => {
-  const el = ev.target.closest('[data-phase],[data-tab],[data-filter],[data-open],#camo,#btnCam,#btnSnap,#reCheck,#again,#pif,#clearHist');
-  if (!el) return;
-  if (el.dataset.phase) { state.phase = +el.dataset.phase; store.set('phase', state.phase); renderAll(); }
+  const el = ev.target.closest('[data-phase],[data-tab],[data-filter],[data-open],[data-person],[data-family],[data-premove],[data-del],#camo,#btnCam,#btnSnap,#reCheck,#again,#clearHist,#printHist,#printAvoid,#printScan,#addList,#staples,#printList,#clearDone,#clearList,#addPerson,#famDone');
+  if (!el || el.disabled) return;
+  if (el.dataset.phase) { state.phase = okPhase(+el.dataset.phase); me().phase = state.phase; saveProfiles(); renderAll(); }
+  else if (el.dataset.person) { if (profileOf(el.dataset.person)) { state.active = el.dataset.person; state.phase = me().phase; saveProfiles(); renderAll(); } }
+  else if (el.dataset.family !== undefined) openFamily();
+  else if (el.dataset.premove) {
+    if (state.profiles.length < 2) return;
+    state.profiles = state.profiles.filter(p => p.id !== el.dataset.premove);
+    if (!profileOf(state.active)) state.active = state.profiles[0].id;
+    state.phase = me().phase; saveProfiles(); renderFamily();
+  }
+  else if (el.id === 'addPerson') {
+    if (state.profiles.length >= 8) return;
+    const p = { id: 'p' + uid(), name: 'Person ' + (state.profiles.length + 1), phase: 1 };
+    state.profiles.push(p); saveProfiles(); renderFamily();
+    const input = $(`[data-pname="${p.id}"]`); if (input) { input.focus(); input.select(); }
+  }
+  else if (el.id === 'famDone') closeFamily();
+  else if (el.dataset.del) { state.list = state.list.filter(x => x.id !== el.dataset.del); saveList(); renderList(); }
   else if (el.dataset.tab) setTab(el.dataset.tab);
   else if (el.dataset.filter) { state.filter = +el.dataset.filter; renderGuide(); }
   else if (el.dataset.open) { state.scan = state.history[+el.dataset.open]; setTab('scan'); renderResult(); const b = $('#result'); if (b.scrollIntoView) b.scrollIntoView({ block: 'start' }); }
@@ -906,11 +1187,43 @@ document.addEventListener('click', ev => {
     showScan({ kind: s.kind, code: s.code, title: s.title, text, tags: s.tags, hits: analyse({ text, tags: s.tags || [], fuzzy: s.kind === 'photo' }), unknown: !text.trim() && !(s.tags || []).length, why: 'ocr' }, s.t);
   }
   else if (el.id === 'again') { state.scan = null; renderResult(); window.scrollTo(0, 0); }
-  else if (el.id === 'pif') {
-    IMPACT.ledger.unshift(['Preview', new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }), 25, 'Preview pledge, not charged']);
-    renderImpact(); toast('Preview only. No payment was taken.');
-  }
   else if (el.id === 'clearHist') { state.history = []; store.set('history', []); renderHistory(); toast('History cleared.'); }
+  else if (el.id === 'printHist') printHistory();
+  else if (el.id === 'printAvoid') printAvoid();
+  else if (el.id === 'printScan') { if (state.scan) printScan(state.scan); }
+  else if (el.id === 'printList') printList();
+  else if (el.id === 'addList') {
+    const s = state.scan; if (!s) return;
+    const added = addToList({ k: 'product', t: s.title, c: s.code || '', h: s.hits.map(x => x.id), u: !!s.unknown });
+    renderList(); toast(added ? 'Added to your shopping list.' : 'Already on your shopping list.');
+  }
+  else if (el.id === 'staples') addStaples();
+  else if (el.id === 'clearDone') { state.list = state.list.filter(x => !x.d); saveList(); renderList(); }
+  else if (el.id === 'clearList') { state.list = []; saveList(); renderList(); toast('Shopping list cleared.'); }
+});
+// Checkboxes, family names and phases
+document.addEventListener('change', ev => {
+  const el = ev.target, d = el.dataset || {};
+  if (d.done) { const it = state.list.find(x => x.id === d.done); if (it) { it.d = el.checked; saveList(); renderList(); } }
+  else if (d.pphase) { const p = profileOf(d.pphase); if (p) { p.phase = okPhase(+el.value); if (p.id === state.active) state.phase = p.phase; saveProfiles(); } }
+  else if (d.pname) {
+    const p = profileOf(d.pname);
+    if (p && !el.value.trim()) { p.name = 'Person ' + (state.profiles.indexOf(p) + 1); el.value = p.name; saveProfiles(); }
+  }
+});
+document.addEventListener('input', ev => {
+  const d = ev.target.dataset || {};
+  if (d.pname) { const p = profileOf(d.pname), v = ev.target.value.trim().slice(0, 24); if (p && v) { p.name = v; saveProfiles(); } }
+});
+$('#family').addEventListener('close', renderAll);
+$('#fList').addEventListener('submit', ev => {
+  ev.preventDefault();
+  const text = $('#inList').value.trim().slice(0, 80);
+  if (!text) return toast('Type an item first.');
+  const hits = analyse({ text }).map(x => x.id);
+  if (!addToList({ k: 'item', t: text, h: hits })) return toast('Already on your shopping list.');
+  $('#inList').value = ''; renderList();
+  if (hits.some(id => DB[id].riskTier < 3)) toast('Added. This item names an additive on the list, so check the label.');
 });
 ['fileCam', 'filePick'].forEach(id => $('#' + id).addEventListener('change', ev => { const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; readFile(f); }));
 $('#fCode').addEventListener('submit', ev => { ev.preventDefault(); lookupBarcode($('#inCode').value); });
@@ -929,7 +1242,7 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => { /* offline support is optional */ }); });
 }
 
-window.PureGut = { DB, ADDITIVES, analyse, verdictOf };   // handy for checking the dataset in the console
+window.PureGut = { DB, ADDITIVES, analyse, verdictOf, SUPPORT };   // handy for checking the dataset in the console
 applyMode();
 setTab('scan');
 })();
